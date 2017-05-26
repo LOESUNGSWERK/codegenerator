@@ -29,8 +29,11 @@ class TaskControler
 		reset($this->projectData['tables']);
 		foreach ($this->projectData['tables'] as $table) {
 			$templateVars = $table;
+
 			$templateVars['project']=$this->projectData['project'];
-			$templateVars['template']=$this->projectData['template'];
+			$templateVars['templates']=$this->projectData['templates'];
+			$templateVars['module']=$this->projectData['module'];
+
 			$destination = $this->getDesinationFile($templateVars);
             Log::writeLog(pathinfo($destination,PATHINFO_FILENAME).'[');
             if (file_exists($destination)) {
@@ -76,7 +79,7 @@ class TaskControler
 	private function getDesinationFile($templateVars){
 			$templateFile = $this->getCacheDir().md5($this->task['destinationFile']).'.html';
             file_put_contents($templateFile,$this->task['destinationFile']);
-			return $this->getProjectRoot().'dist/'.$templateVars['template']['target'].$this->getTemplater()->render(md5($this->task['destinationFile']).'.html', $templateVars);
+			return $this->getProjectRoot().'dist/'.$templateVars['templates']['target'].$this->getTemplater()->render(md5($this->task['destinationFile']).'.html', $templateVars);
 	}
 
 

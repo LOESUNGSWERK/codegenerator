@@ -1,0 +1,11 @@
+[
+  {
+    "masterTable": "users",
+    "masterField": "id",
+    "childrenTable": "content",
+    "childrenField": "user_id",
+    "onDelete": null,
+    "onUpdate": null,
+    "onInsert": null
+  }
+]

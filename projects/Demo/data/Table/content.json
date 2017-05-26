@@ -1,7 +1,7 @@
 {
-    "tableName"         : "users",
-    "desctiption"       : "Userverwaltung",
-    "modulName"         : "user",
+    "tableName"         : "content",
+    "desctiption"       : "Website",
+    "modulName"         : "web",
     "isDepricated"      : false,
     "tableType"         : "table",
     "extraInformation"  : {
@@ -19,7 +19,7 @@
           "canBeNull"     : false
       },
       {
-          "fieldName"     : "user_gruppen_id",
+          "fieldName"     : "user_id",
           "fieldType"     : "integer",
           "defaultValue"  : null,
           "isAutoinc"     : false,
@@ -28,7 +28,7 @@
           "canBeNull"     : false
       },
       {
-          "fieldName"         : "bez1",
+          "fieldName"         : "bez_kurz",
           "fieldType"         : "string",
           "defaultValue"      : null,
           "isAutoinc"         : false,
@@ -41,7 +41,7 @@
           }
       },
       {
-          "fieldName"         : "login",
+          "fieldName"         : "bez_lang",
           "fieldType"         : "string",
           "defaultValue"      : null,
           "isAutoinc"         : false,
@@ -50,8 +50,8 @@
           "canBeNull"         : false
       },
       {
-          "fieldName"         : "passwort",
-          "fieldType"         : "password",
+          "fieldName"         : "intalt",
+          "fieldType"         : "text",
           "defaultValue"      : null,
           "isAutoinc"         : false,
           "isPrimaryKey"      : false,

@@ -23,7 +23,8 @@ class Creator
 	}
 
 	private function executeProject($data){
-	    $startTime = microtime(true);
+        print_r($data);
+        $startTime = microtime(true);
 		$this->data = array('project'=>$data);
 		unset($this->data['project']['defaults']);
 		$template 		= $data['template'];
@@ -34,11 +35,12 @@ class Creator
                                 array('target'=>'./'),
 		                        json_decode( file_get_contents( $templatePath.'creator.json'),true)
                           );
-		$this->data['template'] = $templateDaten;
-		unset($this->data['template']['tasks']);
-		unset($this->data['template']['defaults']);
+		$this->data['templates'] = $templateDaten;
+		unset($this->data['templates']['tasks']);
+		unset($this->data['templates']['defaults']);
 
 		if (!is_array($data['defaults'])){ $data['defaults'] = array(); }
+		if (!is_array($templateDaten['defaults'])){ $templateDaten['defaults'] = array(); }
         $defaults 		= array_merge($templateDaten['defaults'],$data['defaults']);
         $taskListe 		= $templateDaten['tasks'];
 		$this->loadProjectData($projectPath.'/data/',$defaults);
@@ -81,6 +83,8 @@ class Creator
 				if($val['isIndex']){ 		$table['indexFields'][$tableField['fieldName']] = $tableField; }
 			}
 			$this->data['tables'][$table['tableName']]=$table;
+			$this->data['module'][$table['modulName']][]=$table['tableName'];
+
 		}
 
 		$files = array_diff(scandir($referencesPath), array('..', '.'));

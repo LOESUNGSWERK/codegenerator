@@ -1,0 +1,16 @@
+{
+  "creator": "LÖSUNGSWERK",
+  "user": "Rene Kühle",
+  "caption": "Demo Applikation",
+  "description": "zeigt die einfache Funktion des ganzen",
+  "target": "./simpleDemo/",
+  "tasks": [
+    {
+      "caption": "Datemmodel",
+      "insertTemplateFile": "dm.html",
+      "destinationFile": "{{tableName|ucf}}.html",
+      "onUpdate": "OVERWRIDE",
+      "aktiv": true
+    }
+  ]
+}
