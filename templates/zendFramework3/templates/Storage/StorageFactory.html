@@ -1,0 +1,38 @@
+<?php
+/**
+ * @copyright  Copyright (c) 2017 TraSo GmbH (www.traso.de)
+ * @author     rkuehle
+ * @since      11.05.17
+ */
+
+namespace {{modulName|ucf}}\Model\{{tableName|ucf}}\Storage;
+
+use Interop\Container\ContainerInterface;
+use Zend\Db\ResultSet\ResultSet;
+use Zend\Db\TableGateway\TableGateway;
+use Zend\ServiceManager\Factory\FactoryInterface;
+
+/**
+ * Class {{tableName|ucf}}StorageFactory
+ * @package {{modulName|ucf}}\Model\{{tableName|ucf}}\Storage
+ */
+class {{tableName|ucf}}StorageFactory implements FactoryInterface
+{
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return {{tableName|ucf}}Storage
+     */
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    {
+        $adapter = $container->get(AdapterInterface::class);
+
+        $resultSet = new ResultSet(ResultSet::TYPE_ARRAY);
+
+        $tableGateway = new TableGateway(
+            '{{tableName}}', $adapter, null, $resultSet
+        );
+
+        return new {{tableName|ucf}}Storage($tableGateway);
+    }
+}

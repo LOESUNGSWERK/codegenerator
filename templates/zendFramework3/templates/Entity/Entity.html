@@ -1,0 +1,39 @@
+{{ tableName | ucf }}
+{{ tableName | lcf }}
+
+
+{% if fields|length > 0 %}
+    /* Fieldliste */
+    {% for item in fields %}
+        {{ item.fieldName | ucf  }}
+    {% endfor %}
+{% endif %}
+
+{% if primaryFields|length > 0 %}
+    /* primaryFields */
+    {% for item in primaryFields %}
+        {{ item.fieldName | ucf  }}
+    {% endfor %}
+{% endif %}
+
+{% if isIndex|length > 0 %}
+    /* isIndex */
+    {% for item in isIndex %}
+        {{ item.fieldName | ucf  }}
+    {% endfor %}
+{% endif %}
+
+{% if children|length > 0 %}
+    /* children */
+    {% for item in children %}
+        {{ item.childrenTable | ucf  }}
+    {% endfor %}
+{% endif %}
+
+{% if parents|length > 0 %}
+    /* parents */
+    {% for item in parents %}
+        {{ item.masterTable | ucf  }}
+    {% endfor %}
+{% endif %}
+
