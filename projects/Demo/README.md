@@ -6,9 +6,9 @@ im Unterverzeichniss "data" werden 2 Verzeichnisse erwartet
 ## data/Table/user.json
 ```json
 {
-    "tableName"         : "users", /* Name der tabelle in der Db */
-    "desctiption"       : "Userverwaltung", /* Beschreibung */ 
-    "modulName"         : "user", /* Name des Modules zu dem die Tabelle gehört */
+    "tableName"         : "users", 
+    "desctiption"       : "Userverwaltung", 
+    "modulName"         : "user",
     "isDepricated"      : false, 
     "tableType"         : "table",
     "fields":[ 

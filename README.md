@@ -7,8 +7,8 @@ wandelt ein Datenmodell über freih configurierbare Controler und Views in Files
   "projects"       : [
       {
           "caption"     : "Demo Projekt",
-          "project"     : "Demo", /* path in "./projects" */
-          "template"    : "demo" /* path to codetemplate in "./tempaltes/" */
+          "project"     : "Demo",
+          "template"    : "demo" 
       }
   ]
 }
