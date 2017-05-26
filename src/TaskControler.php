@@ -30,6 +30,7 @@ class TaskControler
 		foreach ($this->projectData['tables'] as $table) {
 			$templateVars = $table;
 			$templateVars['project']=$this->projectData['project'];
+			$templateVars['template']=$this->projectData['template'];
 			$destination = $this->getDesinationFile($templateVars);
             Log::writeLog(pathinfo($destination,PATHINFO_FILENAME).'[');
             if (file_exists($destination)) {
@@ -58,14 +59,12 @@ class TaskControler
 	 * @return \Twig_Environment
 	 */
 	private function getTemplater(){
-		$cacheDir = $this->projectRoot.'data/temp/';
-		if (!is_dir($cacheDir)){ mkdir($cacheDir,0777,true); }
 		$loader = new \Twig_Loader_Filesystem(array(
 			$this->templateRoot.'templates/',
-			$this->getProjectRoot().'data/'
+			$this->getProjectRoot().'data/temp/'
 		));
 		$twig = new \Twig_Environment($loader, array(
-			'cache' => $cacheDir,
+			'cache' => $this->getCacheDir(),
 			'debug' => true
 		));
 		$twig->addExtension(new \Twig_Extension_Debug());
@@ -75,12 +74,17 @@ class TaskControler
 
 
 	private function getDesinationFile($templateVars){
-			$templateFile = $this->getProjectRoot().'data/destinationTemplate.html';
-			file_put_contents($templateFile,$this->task['destinationFile']);
-			echo  $this->getTemplater()->render('destinationTemplate.html', $templateVars);
-			die();
+			$templateFile = $this->getCacheDir().md5($this->task['destinationFile']).'.html';
+            file_put_contents($templateFile,$this->task['destinationFile']);
+			return $this->getProjectRoot().'dist/'.$templateVars['template']['target'].$this->getTemplater()->render(md5($this->task['destinationFile']).'.html', $templateVars);
 	}
 
+
+	private function getCacheDir(){
+	    $return = $this->projectRoot.'data/temp/';
+		if (!is_dir($return)){ mkdir($return,0777,true); }
+		return $return;
+    }
 
 	/**
 	 * @return array

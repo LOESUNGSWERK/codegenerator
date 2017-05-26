@@ -25,15 +25,22 @@ class Creator
 	private function executeProject($data){
 	    $startTime = microtime(true);
 		$this->data = array('project'=>$data);
-		unset($this->data['project']['tasks']);
 		unset($this->data['project']['defaults']);
 		$template 		= $data['template'];
 		$project 		= $data['project'];
 		$templatePath 	= __DIR__ .'/../templates/'.$template.'/';
 		$projectPath 	= __DIR__ .'/../projects/'.$project;
-		$templateDaten	= json_decode( file_get_contents( $templatePath.'creator.json'),true);
-		$defaults 		= array_merge($templateDaten['defaults'],$data['defaults']);
-		$taskListe 		= $templateDaten['tasks'];
+		$templateDaten	= array_merge(
+                                array('target'=>'./'),
+		                        json_decode( file_get_contents( $templatePath.'creator.json'),true)
+                          );
+		$this->data['template'] = $templateDaten;
+		unset($this->data['template']['tasks']);
+		unset($this->data['template']['defaults']);
+
+		if (!is_array($data['defaults'])){ $data['defaults'] = array(); }
+        $defaults 		= array_merge($templateDaten['defaults'],$data['defaults']);
+        $taskListe 		= $templateDaten['tasks'];
 		$this->loadProjectData($projectPath.'/data/',$defaults);
 		Log::writeLogLn('project: '.$project);
 		Log::writeLogLn( str_pad('',strlen($project)+15,'='));
@@ -57,10 +64,11 @@ class Creator
 	private function loadProjectData($path,$defaults){
 		$tablePath = $path.'Table/';
 		$referencesPath = $path.'References/';
-
+        if (!is_array($defaults['field'])){ $defaults['field'] = array(); }
 		$files = array_diff(scandir($tablePath), array('..', '.'));
 		while (list($key,$file)=@each($files)){
-			$table = array_merge(
+			if (!is_array($defaults['table'])){$defaults['table'] = array(); }
+		    $table = array_merge(
 				$defaults['table'],
 				json_decode( file_get_contents( $tablePath.'/'.$file), true)
 			);
@@ -77,6 +85,7 @@ class Creator
 
 		$files = array_diff(scandir($referencesPath), array('..', '.'));
 		while (list($key,$file)=@each($files)){
+		    if (!is_array($defaults['reference'])){$defaults['reference'] = array(); }
 			$references = array_merge(
 				$defaults['reference'],
 				json_decode( file_get_contents( $referencesPath.'/'.$file), true)

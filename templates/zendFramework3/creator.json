@@ -3,7 +3,7 @@
   "user": "Rene Kühle",
   "caption": "zendFrameWork3-MVC",
   "description": "baut ein MVC-Pattern für zendFramework3",
-  "target": "./Target",
+  "target": "./zendFramework/",
   "defaults": {
     "table": {
       "isDepricated": false,
