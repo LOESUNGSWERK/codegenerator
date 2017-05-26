@@ -1,19 +1,9 @@
 {
   "projects"       : [
       {
-          "caption"     : "Proconame 3.0",
-          "project"     : "proconame30",
-          "template"    : "zendFramework3",
-          "defaults"    : {
-              "tables" :{
-                    "isDepricated"  : false,
-                    "tableType"     : "table",
-                    "extraInformation"  : {
-                          "hasPictureliste" : true,
-                          "isDistributable" : true
-                    }
-              }
-          }
+          "caption"     : "Demo Projekt",
+          "project"     : "Demo",
+          "template"    : "zendFramework3"
       }
   ]
 }

@@ -1,0 +1,45 @@
+{
+    "tableName"         : "users",
+    "desctiption"       : "Userverwaltung",
+    "modulName"         : "user",
+    "isDepricated"      : false,
+    "tableType"         : "table",
+    "extraInformation"  : {
+        "hasPictureliste" : true,
+        "isDistributable" : true
+    },
+    "fields":[
+      {
+          "fieldName"     : "id",
+          "fieldType"     : "integer",
+          "defaultValue"  : null,
+          "isAutoinc"     : true,
+          "isPrimaryKey"  : true,
+          "isIndex"       : false,
+          "canBeNull"     : false
+      },
+      {
+          "fieldName"     : "user_gruppen_id",
+          "fieldType"     : "integer",
+          "defaultValue"  : null,
+          "isAutoinc"     : false,
+          "isPrimaryKey"  : false,
+          "isIndex"       : true,
+          "canBeNull"     : false
+      },
+      {
+          "fieldName"         : "bez1",
+          "fieldType"         : "string",
+          "defaultValue"      : null,
+          "isAutoinc"         : false,
+          "isPrimaryKey"      : false,
+          "isIndex"           : false,
+          "canBeNull"         : false,
+          "extraInformation"  : {
+                "minLength" : 20,
+                "maxLength" : 50
+          }
+      }
+
+    ]
+}
