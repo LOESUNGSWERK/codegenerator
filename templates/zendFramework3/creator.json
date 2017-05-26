@@ -28,14 +28,6 @@
   },
   "tasks": [
     {
-      "caption": "Dump",
-      "insertTemplateFile": "dump.html",
-      "updateTemplateFile": "dump.html",
-      "destinationFile": "dump.html",
-      "onUpdate": "OVERWRIDE",
-      "aktiv": true
-    },
-    {
       "caption": "Entity",
       "insertTemplateFile": "Entity/Entity.html",
       "destinationFile": "module/{{modul|ucf}}/src/Model/{{tableName|ucf}}/Entity/{{tableName|ucf}}Entity.php",
@@ -53,6 +45,20 @@
       "caption": "Storage",
       "insertTemplateFile": "Storage/Storage.html",
       "destinationFile": "module/{{modul|ucf}}/src/Model/{{tableName|ucf}}/Storage/{{tableName|ucf}}Storage.php",
+      "onUpdate": "OVERWRIDE",
+      "aktiv": true
+    },
+    {
+      "caption": "Repository",
+      "insertTemplateFile": "Repository/Repository.html",
+      "destinationFile": "module/{{modul|ucf}}/src/Model/{{tableName|ucf}}/Repository/{{tableName|ucf}}Repository.php",
+      "onUpdate": "OVERWRIDE",
+      "aktiv": true
+    },
+    {
+      "caption": "RepositoryFactory",
+      "insertTemplateFile": "Repository/RepositoryFactory.html",
+      "destinationFile": "module/{{modul|ucf}}/src/Model/{{tableName|ucf}}/Repository/{{tableName|ucf}}RepositoryFactory.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     }

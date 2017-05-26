@@ -1,39 +1,69 @@
-{{ tableName | ucf }}
-{{ tableName | lcf }}
+<?php
+/**
+ * @copyright  Copyright (c) 2017 TraSo GmbH (www.traso.de)
+ * @author     rkuehle
+ * @since      11.05.17
+ */
+
+namespace {{modulName|ucf}}\Model\{{tableName|ucf}}\Entity;
+
+use Application\Model\Settings\Storage\SettingsStorage;
+use Zend\Hydrator\ClassMethods;
 
 
-{% if fields|length > 0 %}
-    /* Fieldliste */
-    {% for item in fields %}
-        {{ item.fieldName | ucf  }}
-    {% endfor %}
-{% endif %}
+/**
+ * Class SettingsEntity
+ * @package {{modulName|ucf}}\Model\{{tableName|ucf}}\Entity;
+ */
+class {{tableName|ucf}}Entity
+{
 
-{% if primaryFields|length > 0 %}
-    /* primaryFields */
-    {% for item in primaryFields %}
-        {{ item.fieldName | ucf  }}
-    {% endfor %}
-{% endif %}
 
-{% if isIndex|length > 0 %}
-    /* isIndex */
-    {% for item in isIndex %}
-        {{ item.fieldName | ucf  }}
-    {% endfor %}
-{% endif %}
+    /**
+     * @var {{tableName|ucf}}Storage
+     */
+    private $storage;
 
-{% if children|length > 0 %}
-    /* children */
-    {% for item in children %}
-        {{ item.childrenTable | ucf  }}
-    {% endfor %}
-{% endif %}
+    {% if fields|length > 0 %}{% for item in fields %}
+    private ${{item.fieldName|lcf}};
+    {% endfor %}{% endif %}
 
-{% if parents|length > 0 %}
-    /* parents */
-    {% for item in parents %}
-        {{ item.masterTable | ucf  }}
-    {% endfor %}
-{% endif %}
+    /**
+     * {{tableName|ucf}}Entity constructor.
+     * @param {{tableName|ucf}}Storage $repository
+     */
+    public function __construct($repository)
+    {
+        $this->storage = $repository;
+    }
 
+    public function toArray(){
+        $help = new ClassMethods();
+        return $help->extract($this);
+    }
+
+    {% if fields|length > 0 %}{% for item in fields %}
+
+    /**
+     * @return mixed
+     */
+    public function get{{item.fieldName|ucf}}()
+    {
+        return $this->{{item.fieldName|lcf}};
+    }
+
+    /**
+     * @param mixed ${{item.fieldName|lcf}}
+     * @return self
+     */
+    public function set{{item.fieldName|ucf}}(${{item.fieldName|lcf}})
+    {
+        $this->{{item.fieldName|lcf}} = ${{item.fieldName|lcf}};
+        return $this;
+    }
+
+    {% endfor %}{% endif %}
+
+
+
+}

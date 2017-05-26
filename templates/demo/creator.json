@@ -5,6 +5,25 @@
   "description": "zeigt die einfache Funktion des ganzen",
   "target": "./simpleDemo/",
   "tasks": [
+     {
+      "caption": "Index Seite",
+      "insertTemplateFile": "index/index.html",
+      "destinationFile": "index.html",
+      "onUpdate": "REPLACE",
+      "replaceTasks": [
+        {
+          "detect" : "<!-- detect {{tableName|ucf}} li -->",
+          "replaceAfter" : "<!-- myDatenmodelleLi -->",
+          "templateFile" : "index/datenmodelleLi.html"
+        },
+        {
+          "detect" : "<!-- detect {{tableName|ucf}} Div -->",
+          "replaceAfter" : "<!-- myDatenmodelleDiv -->",
+          "templateFile" : "index/datenmodellDiv.html"
+        }
+      ],
+      "aktiv": true
+    },
     {
       "caption": "Datemmodel",
       "insertTemplateFile": "dm.html",

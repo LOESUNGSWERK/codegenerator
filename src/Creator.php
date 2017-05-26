@@ -16,14 +16,18 @@ class Creator
 	private $data;
 
 	public function run(){
+	    Log::writeLogLn('Start');
 		$projets = json_decode( file_get_contents( __DIR__ .'/../creator.json'), true);
 		while (list($key,$val)=@each($projets['projects'])){
-			$this->executeProject($val);
+			Log::writeLogLn('');
+		    Log::writeLogLn('');
+		    $this->executeProject($val);
+		    Log::writeLogLn('');
+		    Log::writeLogLn('');
 		}
 	}
 
 	private function executeProject($data){
-        print_r($data);
         $startTime = microtime(true);
 		$this->data = array('project'=>$data);
 		unset($this->data['project']['defaults']);
@@ -59,7 +63,6 @@ class Creator
 		Log::writeLogLn( str_pad('',strlen($project)+15,'-'));
 		Log::writeLogLn('fertig nach '.
                         number_format((microtime(true)-$startTime),3,',','.' ).'sek' );
-
 	}
 
 

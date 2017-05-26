@@ -1,0 +1,31 @@
+<?php
+/**
+ * @copyright  Copyright (c) 2017 TraSo GmbH (www.traso.de)
+ * @author     rkuehle
+ * @since      11.05.17
+ */
+
+namespace {{modulName|ucf}}\Model\{{tableName|ucf}}\Repository;
+
+use {{modulName|ucf}}\Model\{{tableName|ucf}}\Storage\{{tableName|ucf}}Storage;
+use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+
+/**
+ * Class SettingsRepositoryFactory
+ * @package {{modulName|ucf}}\Model\{{tableName|ucf}}\Repository;
+ */
+class {{tableName|ucf}}RepositoryFactory implements FactoryInterface
+{
+
+    /**
+     * @param ContainerInterface $container
+     *
+     * @return {{tableName|ucf}}Repository
+     */
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    {
+        return new {{tableName|ucf}}Repository( $container->get({{tableName|ucf}}Storage::class) );
+    }
+
+}

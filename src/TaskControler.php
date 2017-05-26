@@ -37,26 +37,67 @@ class TaskControler
 			$destination = $this->getDesinationFile($templateVars);
             Log::writeLog(pathinfo($destination,PATHINFO_FILENAME).'[');
             if (file_exists($destination)) {
-            	if (empty($this->task['updateTemplateFile'])){
-					$template = $this->task['insertTemplateFile'];
-				}else{
-            		$template = $this->task['updateTemplateFile'];
-            	}
-                $code = $this->getTemplater()->render($template, $templateVars);
-                file_put_contents($destination, $code);
-                Log::writeLog('u');
+
+                switch (strtoupper($this->task['onUpdate'])){
+                    case 'OVERWRIDE':   $this->updateQuellcode($destination,$templateVars); break;
+                    case 'REPLACE':     $this->replaceQuellcode($destination,$templateVars); break;
+                    case 'IGNORE':
+                    default:
+                        Log::writeLog('x');
+                    break;
+                }
+
+
             } else {
                 $dir = pathinfo($destination, PATHINFO_DIRNAME);
                 if (!is_dir($dir)) { mkdir($dir, 0777, true); }
                 $code = $this->getTemplater()->render($this->task['insertTemplateFile'], $templateVars);
                 file_put_contents($destination, $code);
                 Log::writeLog('i');
+                if (strtoupper($this->task['onUpdate'])=='REPLACE'){
+                    $this->replaceQuellcode($destination,$templateVars);
+                }
             }
             Log::writeLog('] ');
         }
         Log::writeLogLn(number_format((microtime(true)-$startTime),3,',','.' ).'sek');
 	}
 
+
+	private function replaceQuellcode($destination,$templateVars){
+	    $aktuellerQuellcode = file_get_contents($destination);
+	    $newQuellcode = $aktuellerQuellcode;
+        $replacetasks = $this->task['replaceTasks'];
+        foreach ($replacetasks as $rtask){
+            $neddle = $this->renderString( $rtask['detect'],$templateVars );
+            if (strpos($newQuellcode,$neddle)===false){
+                $replaceAfter = $this->renderString( $rtask['replaceAfter'],$templateVars );
+                if (strpos($newQuellcode,$replaceAfter) !== false) {
+                    $newQuellcode = str_replace(
+                        $replaceAfter,
+                        $replaceAfter . $this->getTemplater()->render($rtask['templateFile'], $templateVars),
+                        $newQuellcode
+                    );
+                }
+            }
+        }
+        if ($aktuellerQuellcode != $newQuellcode){
+            file_put_contents($destination, $newQuellcode);
+            Log::writeLog('r');
+        }
+    }
+
+	private function updateQuellcode($destination,$templateVars){
+	    if (empty($this->task['updateTemplateFile'])){
+            $template = $this->task['insertTemplateFile'];
+        }else{
+            $template = $this->task['updateTemplateFile'];
+        }
+
+        $code = $this->getTemplater()->render($template, $templateVars);
+        file_put_contents($destination, $code);
+        Log::writeLog('u');
+    }
 
 	/**
 	 * @return \Twig_Environment
@@ -77,15 +118,22 @@ class TaskControler
 
 
 	private function getDesinationFile($templateVars){
-			$templateFile = $this->getCacheDir().md5($this->task['destinationFile']).'.html';
-            file_put_contents($templateFile,$this->task['destinationFile']);
-			return $this->getProjectRoot().'dist/'.$templateVars['templates']['target'].$this->getTemplater()->render(md5($this->task['destinationFile']).'.html', $templateVars);
+			return $this->getProjectRoot().'dist/'.$templateVars['templates']['target'].$this->renderString($this->task['destinationFile'], $templateVars);
 	}
 
+	private function renderString($string,$templateVars){
+			$templateFile = $this->getCacheDir().md5($string).'.html';
+            file_put_contents($templateFile,$string);
+			return $this->getTemplater()->render(md5($string).'.html', $templateVars);
+	}
 
+	private $cacheDirExisits;
 	private function getCacheDir(){
 	    $return = $this->projectRoot.'data/temp/';
-		if (!is_dir($return)){ mkdir($return,0777,true); }
+	    if ($this->cacheDirExisits != 1){
+            if (!is_dir($return)){ mkdir($return,0777,true); }
+            $this->cacheDirExisits = 1;
+        }
 		return $return;
     }
 
