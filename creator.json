@@ -4,6 +4,11 @@
           "caption"     : "Demo Projekt",
           "project"     : "Demo",
           "template"    : "demo"
+      },
+     {
+          "caption"     : "Zend Framework 3 - MVC",
+          "project"     : "Demo",
+          "template"    : "zendFramework3"
       }
   ]
 }
