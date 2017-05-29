@@ -1,0 +1,38 @@
+<?php
+/**
+ * @link      http://github.com/zendframework/ZendSkeleton{{modulName|ucf}} for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
+namespace {{modulName|ucf}}\Controller;
+
+
+use Zend\Http\Request;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
+use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger;
+
+/**
+ * Class IndexController
+ * @package {{modulName|ucf}}\Controller
+ * @method Request getRequest()
+ * @method  FlashMessenger flashMessenger()
+ */
+class {{tableName|ucf}}Controller extends AbstractActionController
+{
+
+    public function indexAction()
+    {
+        $this->checkLogin();
+
+        return new ViewModel();
+    }
+
+    private function checkLogin()
+    {
+        if (!$this->identity()) {
+            return $this->redirect()->toRoute('user-frontend');
+        }
+    }
+}

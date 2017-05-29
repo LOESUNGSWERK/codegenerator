@@ -30,36 +30,158 @@
     {
       "caption": "Entity",
       "insertTemplateFile": "Entity/Entity.html",
-      "destinationFile": "module/{{modul|ucf}}/src/Model/{{tableName|ucf}}/Entity/{{tableName|ucf}}Entity.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{tableName|ucf}}/Entity/{{tableName|ucf}}Entity.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "StorageFactory",
       "insertTemplateFile": "Storage/StorageFactory.html",
-      "destinationFile": "module/{{modul|ucf}}/src/Model/{{tableName|ucf}}/Storage/{{tableName|ucf}}StorageFactory.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{tableName|ucf}}/Storage/{{tableName|ucf}}StorageFactory.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "Storage",
       "insertTemplateFile": "Storage/Storage.html",
-      "destinationFile": "module/{{modul|ucf}}/src/Model/{{tableName|ucf}}/Storage/{{tableName|ucf}}Storage.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{tableName|ucf}}/Storage/{{tableName|ucf}}Storage.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "Repository",
       "insertTemplateFile": "Repository/Repository.html",
-      "destinationFile": "module/{{modul|ucf}}/src/Model/{{tableName|ucf}}/Repository/{{tableName|ucf}}Repository.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{tableName|ucf}}/Repository/{{tableName|ucf}}Repository.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "RepositoryFactory",
       "insertTemplateFile": "Repository/RepositoryFactory.html",
-      "destinationFile": "module/{{modul|ucf}}/src/Model/{{tableName|ucf}}/Repository/{{tableName|ucf}}RepositoryFactory.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{tableName|ucf}}/Repository/{{tableName|ucf}}RepositoryFactory.php",
       "onUpdate": "OVERWRIDE",
+      "aktiv": true
+    },
+    {
+      "caption": "DbHydrator",
+      "insertTemplateFile": "Hydrator/DbHydrator.html",
+      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{tableName|ucf}}/Hydrator/{{tableName|ucf}}DbHydrator.php",
+      "onUpdate": "OVERWRIDE",
+      "aktiv": true
+    },
+    {
+      "caption": "PostHydrator",
+      "insertTemplateFile": "Hydrator/PostHydrator.html",
+      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{tableName|ucf}}/Hydrator/{{tableName|ucf}}PostHydrator.php",
+      "onUpdate": "OVERWRIDE",
+      "aktiv": true
+    },
+    {
+      "caption": "Form",
+      "insertTemplateFile": "Form/Form.html",
+      "destinationFile": "module/{{modulName|ucf}}/src/Form/{{tableName|ucf}}/{{tableName|ucf}}Form.php",
+      "onUpdate": "OVERWRIDE",
+      "aktiv": true
+    },
+    {
+      "caption": "FormFactory",
+      "insertTemplateFile": "Form/FormFactory.html",
+      "destinationFile": "module/{{modulName|ucf}}/src/Form/{{tableName|ucf}}/{{tableName|ucf}}FormFactory.php",
+      "onUpdate": "OVERWRIDE",
+      "aktiv": true
+    },
+    {
+      "caption": "ACL-Rescources",
+      "insertTemplateFile": "Permissions/Resource.html",
+      "destinationFile": "module/{{modulName|ucf}}/src/Permissions/Resource/{{tableName|ucf}}Resource.php",
+      "onUpdate": "OVERWRIDE",
+      "aktiv": true
+    },
+    {
+      "caption": "Controller",
+      "insertTemplateFile": "Controller/Controller.html",
+      "destinationFile": "module/{{modulName|ucf}}/src/Controller/{{tableName|ucf}}Controller.php",
+      "onUpdate": "OVERWRIDE",
+      "aktiv": true
+    },
+    {
+      "caption": "Module.php",
+      "insertTemplateFile": "Module.html",
+      "destinationFile": "module/{{modulName|ucf}}/src/Module.php",
+      "onUpdate": "IGNORE",
+      "aktiv": true
+    },
+    {
+      "caption": "ControllerFactory",
+      "insertTemplateFile": "Controller/ControllerFactory.html",
+      "destinationFile": "module/{{modulName|ucf}}/src/Controller/{{tableName|ucf}}ControllerFactory.php",
+      "onUpdate": "OVERWRIDE",
+      "aktiv": true
+    },
+    {
+      "caption": "View-Index",
+      "insertTemplateFile": "view/index.html",
+      "destinationFile": "module/{{modulName|ucf}}/view/{{modulName}}/{{tableName|lcf}}/index.phtml",
+      "onUpdate": "OVERWRIDE",
+      "aktiv": true
+    },
+    {
+      "caption": "config",
+      "insertTemplateFile": "config/config.html",
+      "destinationFile": "module/{{modulName|ucf}}/config/module.config.php",
+      "onUpdate": "REPLACE",
+      "replaceTasks": [
+        {
+          "detect" : "/* use for {{tableName|ucf}} */",
+          "replaceAfter" : "/* use includes */",
+          "templateFile" : "config/useIncludes.html"
+        },
+        {
+          "detect" : "/* route for {{tableName|lcf}} */",
+          "replaceAfter" : "/* router routes */",
+          "templateFile" : "config/routerRoutes.html"
+        },
+        {
+          "detect" : "Controller\\{{tableName|ucf}}Controller::class => {{tableName|ucf}}ControllerFactory::class,",
+          "replaceAfter" : "/* controllers factories */",
+          "templateFile" : "config/controllersFactories.html"
+        },
+        {
+          "detect" : "/** Hydrators for {{tableName|ucf}} */",
+          "replaceAfter" : "/* hydrators factories */",
+          "templateFile" : "config/hydratorsFactories.html"
+        },
+        {
+          "detect" : "{{tableName|ucf}}InputFilter::class",
+          "replaceAfter" : "/* input_filters factories */",
+          "templateFile" : "config/inputFiltersFactories.html"
+        },
+        {
+          "detect" : "{{tableName|ucf}}Form::class",
+          "replaceAfter" : "/* form_elements factories */",
+          "templateFile" : "config/formElementsFactories.html"
+        },
+        {
+          "detect" : "/** Service Manager for {{tableName|ucf}} */",
+          "replaceAfter" : "/*  service_manager factories */",
+          "templateFile" : "config/serviceManagerFactories.html"
+        },
+        {
+          "detect" : "/* Guest - {{tableName|ucf}}Resource */",
+          "replaceAfter" : "/* acl GuestRole */",
+          "templateFile" : "config/aclGuestRole.html"
+        },
+        {
+          "detect" : "/* Admin - {{tableName|ucf}}Resource */",
+          "replaceAfter" : "/* acl AdminRole */",
+          "templateFile" : "config/aclAdminRole.html"
+        },
+        {
+          "detect" : "'/../view/{{modulName}}/{{tableName|ucf}}/index.phtml'",
+          "replaceAfter" : "/* template_map */",
+          "templateFile" : "config/templateMap.html"
+        }
+      ],
       "aktiv": true
     }
   ]

@@ -1,0 +1,27 @@
+<?php
+/**
+ * @copyright  Copyright (c) 2017 TraSo GmbH (www.traso.de)
+ * @author     rkuehle
+ * @since      11.05.17
+ */
+
+namespace {{modulName|ucf}}\Form\{{tableName|ucf}};
+
+use {{modulName|ucf}}\Model\{{tableName|ucf}}\Hydrator\{{tableName|ucf}}PostHydrator;
+use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+
+/**
+ * Class {{tableName|ucf}}FormFactory
+ * @package {{modulName|ucf}}\Form\{{tableName|ucf}}
+ */
+class {{tableName|ucf}}FormFactory implements FactoryInterface
+{
+    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    {
+        $form = new {{tableName|ucf}}Form();
+        $form->setHydrator(      $container->get('HydratorManager') -> get({{tableName|ucf}}PostHydrator::class) );
+        return $form;
+    }
+
+}

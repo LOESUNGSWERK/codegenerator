@@ -1,0 +1,46 @@
+<?php
+/**
+ * @copyright  Copyright (c) 2017 TraSo GmbH (www.traso.de)
+ * @author     rkuehle
+ * @since      16.05.17
+ */
+
+namespace {{modulName|ucf}}\Model\{{tableName|ucf}}\Hydrator;
+
+use {{modulName|ucf}}\Model\{{tableName|ucf}}\Entity\{{tableName|ucf}}Entity;
+use Zend\Hydrator\AbstractHydrator;
+use Zend\Hydrator\HydratorInterface;
+
+/**
+ * Class {{tableName|ucf}}DbHydrator
+ * @package {{modulName|ucf}}\Model\{{tableName|ucf}}\Hydrator
+ */
+class {{tableName|ucf}}DbHydrator extends AbstractHydrator implements HydratorInterface
+{
+    /**
+     * @param {{tableName|ucf}}Entity $object
+     * @return array
+     */
+    public function extract($object){
+        return  array(
+        {% if fields|length > 0 %}{% for item in fields %}
+             '{{item.fieldName}}' => $object->get{{item.fieldName|ucf}}(){% if loop.last != true %},{% endif %}
+        {% endfor %}{% endif %}
+        );
+
+    }
+
+    /**
+     * @param array $data
+     * @param DeliveryServerEntity $object
+     * @return DeliveryServerEntity
+     */
+    public function hydrate(array $data, $object)
+    {
+        {% if fields|length > 0 %}{% for item in fields %}
+            $object->set{{item.fieldName|ucf}}($data['{{item.fieldName}}']);
+        {% endfor %}{% endif %}
+        return $object;
+    }
+
+}

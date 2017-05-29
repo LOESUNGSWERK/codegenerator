@@ -1,0 +1,34 @@
+<?php
+
+namespace {{modulName|ucf}}\Permissions\Resource;
+
+use Zend\Permissions\Acl\Resource\GenericResource;
+
+/**
+ * Class IndexResource
+ *
+ * @package {{modulName|ucf}}\Permissions\Resource
+ */
+class {{tableName|ucf}}Resource extends GenericResource
+{
+    /**
+     * @var string name of resource
+     */
+    const NAME = '{{modulName|cctm}}-{{tableName|cctm}}';
+
+    /**
+     * @var string name of privileges
+     */
+    const PRIVILEGE_INDEX   = 'index';
+    const PRIVILEGE_INSERT  = 'insert';
+    const PRIVILEGE_EDIT    = 'edit';
+    const PRIVILEGE_DELETE  = 'del';
+
+    /**
+     * IndexResource constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct(self::NAME);
+    }
+}

@@ -71,7 +71,8 @@ class Creator
 		$referencesPath = $path.'References/';
         if (!is_array($defaults['field'])){ $defaults['field'] = array(); }
 		$files = array_diff(scandir($tablePath), array('..', '.'));
-		while (list($key,$file)=@each($files)){
+
+        while (list($key,$file)=@each($files)){
 			if (!is_array($defaults['table'])){$defaults['table'] = array(); }
 		    $table = array_merge(
 				$defaults['table'],
@@ -101,8 +102,12 @@ class Creator
                 if (trim($reference['masterField'])!=''){
                     $reference['masterField'] = $this->data['tables'][$reference['masterTable']]['fields'][$reference['masterField']];
                     $reference['childrenField'] = $this->data['tables'][$reference['childrenTable']]['fields'][$reference['childrenField']];
-                    $this->data['tables'][$reference['masterTable']]['children'][] = $reference;
-                    $this->data['tables'][$reference['childrenTable']]['parents'][] = $reference;
+                    if (key_exists($reference['masterTable'],$this->data['tables'])){
+                        $this->data['tables'][$reference['masterTable']]['children'][] = $reference;
+                    }
+                    if (key_exists($reference['childrenTable'],$this->data['tables'])) {
+                        $this->data['tables'][$reference['childrenTable']]['parents'][] = $reference;
+                    }
                 }
             }
 		}

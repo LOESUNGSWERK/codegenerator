@@ -1,0 +1,12 @@
+
+            /* route for {{tableName|lcf}} */
+            '{{tableName|lcf}}' => [
+                'type' => Literal::class,
+                'options' => [
+                    'route'    => '/{{tableName|lcf}}',
+                    'defaults' => [
+                        'controller' => Controller\{{tableName|ucf}}Controller::class,
+                        'action'     => 'index',
+                    ],
+                ],
+            ],

@@ -1,0 +1,82 @@
+<?php
+/**
+ * @link      http://github.com/zendframework/ZendSkeletonApplication for the canonical source repository
+ * @copyright Copyright (c) 2005-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @license   http://framework.zend.com/license/new-bsd New BSD License
+ */
+
+namespace {{modulName|ucf}};
+
+/* use includes */
+
+use UserModel\Permissions\Role\AdminRole;
+use UserModel\Permissions\Role\GuestRole;
+
+
+use Zend\Db\Adapter\AdapterInterface;
+use Zend\Db\Adapter\AdapterServiceFactory;
+use Zend\Permissions\Acl\Acl;
+use Zend\Router\Http\Literal;
+use Zend\Router\Http\Segment;
+use Zend\ServiceManager\Factory\InvokableFactory;
+
+return [
+    'dependencies' => [
+        'factories'  => [
+            AdapterInterface::class => AdapterServiceFactory::class,
+        ],
+    ],
+
+    'router' => [
+        'routes' => [ /* router routes */
+        ],
+    ],
+    'controllers' => [
+        'factories' => [ /* controllers factories */
+
+        ],
+    ],
+
+    'hydrators' => [
+        'factories' => [ /* hydrators factories */
+        ],
+    ],
+
+    'input_filters' => [
+        'factories' => [ /* input_filters factories */
+        ],
+    ],
+
+    'form_elements' => [
+        'factories' => [ /* form_elements factories */
+        ],
+    ],
+
+    'service_manager' => [
+        'factories' => [ /*  service_manager factories */
+        ],
+    ],
+
+    'view_helpers' => array(
+        'invokables' => array(
+
+        ),
+    ),
+
+     'view_manager' => [
+        'template_map'        =>[ /* template_map */
+        ],
+        'template_path_stack' => [
+            {{modulName|cctu|upper}}_ROOT. '/view'
+        ],
+     ],
+
+
+     'acl' => [
+        GuestRole::NAME   => [ /* acl GuestRole */
+        ],
+
+        AdminRole::NAME   => [ /* acl AdminRole */
+        ],
+    ],
+];

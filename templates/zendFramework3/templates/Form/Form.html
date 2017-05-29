@@ -1,0 +1,74 @@
+<?php
+/**
+ * @copyright  Copyright (c) 2017 TraSo GmbH (www.traso.de)
+ * @author     rkuehle
+ * @since      11.05.17
+ */
+
+namespace {{modulName|ucf}}\Form\{{tableName|ucf}};
+
+use {{modulName|ucf}}\Model\{{tableName|ucf}}\Entity\{{tableName|ucf}}Entity;
+use Zend\Form\Element\Csrf;
+use Zend\Form\Element\Submit;
+use Zend\Form\Element\Text;
+use Zend\Form\Form;
+
+/**
+ * Class {{tableName|ucf}}Form
+ * @package {{modulName|ucf}}\Form\{{tableName|ucf}}
+ */
+class {{tableName|ucf}}Form extends Form
+{
+
+    /**
+     * Init form
+     */
+    public function init()
+    {
+        $this->setName('{{tableName}}');
+        $this->setAttribute('class', 'form-horizontal');
+        $this->add(['type' => Csrf::class,'name' => 'csrf',]);
+        {% if fields|length > 0 %}{% for item in fields %}
+        $this->add{{item.fieldName|ucf}}();
+        {% endfor %}{% endif %}
+        $this->addSubmit();
+    }
+
+    {% if fields|length > 0 %}{% for item in fields %}
+    private function add{{item.fieldName|ucf}}(){
+        $this->add(
+            [
+                'type'       => Text::class,
+                'name'       => '{{item.fieldName}}',
+                'attributes' => [
+                    'class' => 'form-control',
+                ],
+                'options'    => [
+                    'label'            => '{{item.fieldName|ucf}}',
+                    'label_attributes' => [
+                        'class' => 'col-sm-2 control-label',
+                    ],
+                ],
+            ]
+        );
+    }
+    {% endfor %}{% endif %}
+
+    private function addSubmit(){
+        $this->add(
+            [
+                'type'       => Submit::class,
+                'name'       => 'save',
+                'options'    => [],
+                'attributes' => [
+                    'id'    => 'save_advert',
+                    'class' => 'btn btn-primary btn-sm pull-right',
+                    'value' => 'speichern',
+                ],
+            ]
+        );
+    }
+
+
+
+}

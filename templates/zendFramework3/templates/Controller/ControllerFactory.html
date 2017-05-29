@@ -1,0 +1,28 @@
+<?php
+/**
+ * @copyright  Copyright (c) 2017 TraSo GmbH (www.traso.de)
+ * @author     rkuehle
+ * @since      11.05.17
+ */
+
+namespace {{modulName|ucf}}\Controller;
+
+use Interop\Container\ContainerInterface;
+use Zend\ServiceManager\Factory\FactoryInterface;
+
+/**
+ * Class {{tableName|ucf}}ControllerFactory
+ * @package {{modulName|ucf}}\Controller
+ */
+class {{tableName|ucf}}ControllerFactory implements FactoryInterface
+{
+    public function __invoke(
+        ContainerInterface $container,
+        $requestedName,
+        array $options = null
+    ) {
+
+        return new {{tableName|ucf}}Controller();
+
+    }
+}
