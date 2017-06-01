@@ -1,0 +1,18 @@
+/**
+     * @return mixed
+     */
+    public function get{{item.fieldName|ucf}}()
+    {
+        return $this->{{item.fieldName|lcf}};
+    }
+
+    /**
+     * @param mixed ${{item.fieldName|lcf}}
+     * @return self
+     */
+    public function set{{item.fieldName|ucf}}(${{item.fieldName|lcf}})
+    {
+        $this->{{item.fieldName|lcf}} = ${{item.fieldName|lcf}};
+        return $this;
+    }
+

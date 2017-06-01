@@ -1,0 +1,47 @@
+/**
+     * @param string ${{item.fieldName|lcf}}
+     * @return self
+     */
+    public function set{{item.fieldName|ucf}}(${{item.fieldName|lcf}})
+    {
+        $this->{{item.fieldName|lcf}} = ${{item.fieldName|lcf}};
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function get{{item.fieldName|ucf}}()
+    {
+        if ($this->{{item.fieldName|lcf}} == null){
+            $this->{{item.fieldName|lcf}} = $this->generate{{item.fieldName|ucf}}();
+        }
+        return $this->{{item.fieldName|lcf}};
+    }
+
+    /**
+     * @return string
+     */
+    public function generate{{item.fieldName|ucf}}()
+    {
+        $return = '';
+
+        if ($this->hasParent()){
+            $return .= $this->getParent()->get{{item.fieldName|ucf}}();
+        }else{
+            $return .='tree://';
+        }
+
+        $return .= $this->getId().'/';
+        return $return;
+    }
+
+    /**
+     * @return bool|string
+     */
+    public function get{{item.fieldName|ucf}}WithoutMe(){
+        $tree = $this->get{{item.fieldName|ucf}}();
+        return substr($tree,0,strrpos($tree,'/')-1);
+    }
+
+

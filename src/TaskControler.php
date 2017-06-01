@@ -8,6 +8,7 @@
 
 namespace RkuCreator;
 
+use RkuCreator\Twig\TwigTokenParserSwitch;
 use RkuCreator\Twig\TwigExtension;
 
 class TaskControler
@@ -113,6 +114,7 @@ class TaskControler
 		));
 		$twig->addExtension(new \Twig_Extension_Debug());
 		$twig->addExtension(new TwigExtension() );
+		//$twig->addExtension(new TwigTokenParserSwitch() );
 		return $twig;
 	}
 
