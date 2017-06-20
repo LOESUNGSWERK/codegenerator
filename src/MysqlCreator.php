@@ -9,7 +9,7 @@
 namespace RkuCreator;
 
 
-class MysqlCreator
+class MysqlCreator extends AbstractCreator
 {
 
 	private $localhost;
@@ -39,25 +39,89 @@ class MysqlCreator
 
 
 	private function getTables(){
-		$table = array();
+		$tables = array();
 		$result = $this->mySql->query('SHOW FULL TABLES');
 		while ($myrow = $result->fetch_array(MYSQLI_NUM)){
-		  $table[$myrow[0]]=array();
+		  $tables[$myrow[0]]=1;
 		}
 		$result->close();
 
-		while (list($tableName,$val)=@each($table)){
-			$result = $this->mySql->query('SHOW FULL COLUMNS FROM '.$tableName);
-			while ($myrow = $result->fetch_array(MYSQLI_ASSOC)){
-			  $table[$tableName]['fields'][] =  $myrow;
-			}
-			$result->close();
+		while (list($tableName,$val)=@each($tables)){
+			$tables[$tableName] = $this->convertMysqlTable($tableName);
+			file_put_contents($this->generatePathToProject($this->projectName).'data/Table/'.$tableName.'.json',json_encode($tables[$tableName],JSON_PRETTY_PRINT));
 		}
 
+	}
 
-		print_r($table);
+	private function convertMysqlTable($tableName){
+		$return = [
+			"tableName"         => $tableName,
+			"desctiption"       => null,
+			"modulName"         => null,
+			"isDepricated"      => false,
+			"tableType"         => "table",
+			"extraInformation"  => [
+				"hasPictureliste" => false,
+				"isDistributable" => true
+			],
+			"fields" => []
+		];
 
+		$result = $this->mySql->query('SHOW FULL COLUMNS FROM '.$tableName);
+		while ($myrow = $result->fetch_array(MYSQLI_ASSOC)){
+		  $return['fields'][] =  $this->convertMysqlFieldToField($myrow);
+		}
+		$result->close();
+		return $return;
+	}
 
+	private function convertMysqlFieldToField($mysqlField){
+		$return = [
+		 	"fieldName"     => $mysqlField["Field"],
+          	"fieldType"     => $this->getType($mysqlField),
+          	"defaultValue"  => $mysqlField["Default"],
+          	"isAutoinc"     => ($mysqlField["Extra"]=='auto_increment'),
+          	"isPrimaryKey"  => ($mysqlField["Key"]=='PRI'),
+          	"isIndex"       => in_array($mysqlField["Key"],['PRI','MUL']),
+          	"canBeNull"     => ($mysqlField["Null"] == "YES"),
+			"description"	=> $mysqlField["Comment"],
+		];
+		return $return;
+	}
+
+	private function getType($mysqlField){
+		$return = '';
+		$help = explode('(',$mysqlField["Type"]);
+		$lenght = substr($help[1],0,-1);
+
+		switch (strtolower($help[0])){
+			case 'int':
+				if ($lenght==1){
+					$return='boolean';
+				}else{
+					$return = 'integer';
+				}
+			break;
+
+			case 'varchar':
+				if (in_array(strtolower($mysqlField["Field"]),['bez','label','bez1','kbez','lbez'])){
+					$return = 'label';
+				}elseif ($lenght<200){
+					$return = 'string';
+				}else{
+					$return = 'text';
+				}
+			break;
+
+			case 'timestamp':
+				$return = 'dateTime';
+			break;
+
+			default:
+				return $help[0];
+		}
+
+		return $return;
 	}
 
 	/**

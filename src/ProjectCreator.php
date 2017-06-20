@@ -9,11 +9,8 @@
 namespace RkuCreator;
 
 
-class ProjectCreator
+class ProjectCreator extends AbstractCreator
 {
-
-	const PATH_TO_PROJECTS = __DIR__.'/../projects/';
-	const PATH_TO_DEFAUTLS = __DIR__.'/../data/defaultData/';
 
 	private $projectName;
 	private $overrideIfExists=false;

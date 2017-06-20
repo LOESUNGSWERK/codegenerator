@@ -9,10 +9,8 @@
 namespace RkuCreator;
 
 
-class TemplateCreator
+class TemplateCreator extends AbstractCreator
 {
-	const PATH_TO_TEMPLATES = __DIR__.'/../templates/';
-	const PATH_TO_DEFAUTLS = __DIR__.'/defaultData/';
 
 	private $templateName;
 	private $overrideIfExists=false;

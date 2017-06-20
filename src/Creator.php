@@ -9,7 +9,7 @@
 namespace RkuCreator;
 
 
-class Creator
+class Creator extends AbstractCreator
 {
 
 
@@ -28,8 +28,8 @@ class Creator
         $startTime = microtime(true);
 		$template 		= $this->template;
 		$project 		= $this->project;
-		$templatePath 	= __DIR__ .'/../templates/'.$template.'/';
-		$projectPath 	= __DIR__ .'/../projects/'.$project;
+		$templatePath 	= $this->generatePathToTemplate($template);
+		$projectPath 	= $this->generatePathToProject($project);
 		$templateDaten	= array_merge(
                                 array('target'=>'./'),
 		                        json_decode( file_get_contents( $templatePath.'creator.json'),true)
