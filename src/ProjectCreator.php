@@ -13,7 +13,7 @@ class ProjectCreator
 {
 
 	const PATH_TO_PROJECTS = __DIR__.'/../projects/';
-	const PATH_TO_DEFAUTLS = __DIR__.'/defaultData/';
+	const PATH_TO_DEFAUTLS = __DIR__.'/../data/defaultData/';
 
 	private $projectName;
 	private $overrideIfExists=false;

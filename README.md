@@ -1,3 +1,6 @@
+#... Ist immer noch ALPHA 
+das ist immer noch eher ein How can i work with GIT - test...
+ 
 # codegenerator
 wandelt ein Datenmodell über freih configurierbare Controler und Views in Files um. So kann mann für jede Sprache code erzeugen..
 * das Datenmodell sind json-files mit Datatypes und Master-Detailbeziehungen
@@ -17,13 +20,13 @@ create options
         --generate --project `projektname` --template`templatetname` :: erzeugt den quellcode für das angegbene Projet mit dem angegeben Template
 
         --generateFormDb  :: erzeugt das Datenmodell aus einer Datenbank
-        --generateFormDb --localhost --user --pw --datenbank --table --project --overrideIfExists
+        --generateFormDb --host --user --pw --datenbank --table --project --overrideIfExists
 
 
 Beispiele:
 create --newProject Demo2.0
 create --newTemplate angular.js
-create --generateFormDb --localhost localhost --pot 3306 --user test --pw geheim --datenbank testDb --project Demo2.0
+create --generateFormDb --host localhost --pot 3306 --user test --pw geheim --datenbank testDb --project Demo2.0
 create --generate --project Demo2.0 --template angular.js
 ```
 

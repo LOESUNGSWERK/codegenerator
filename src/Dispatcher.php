@@ -12,149 +12,189 @@ namespace RkuCreator;
 class Dispatcher
 {
 
-	public function run(){
-		if ($this->getOption('generateFromDb')){ $this->generateFromDb();  }
-		if ($this->getOption('new')){ 			$this->createNew(); }
-		if ($this->getOption('generate')){ 		$this->generate();  }
-		if ($this->getOption('help')){ 			$this->paintHelp(); }
+	public function run()
+	{
+		if ($this->getOption('generateFromDb')) {
+			$this->generateFromDb();
+		}
+		if ($this->getOption('new')) {
+			$this->createNew();
+		}
+		if ($this->getOption('generate')) {
+			$this->generate();
+		}
+		if ($this->getOption('help')) {
+			$this->paintHelp();
+		}
 	}
 
 
-	private function generateFromDb(){
-			$localhost  		= trim( $this->getOption('localhost:')  );
-			$user  				= trim( $this->getOption('user:')  );
-			$pw  				= trim( $this->getOption('pw:')  );
-			$datenbank  		= trim( $this->getOption('datenbank:')  );
-			$tabelle  			= trim( $this->getOption('table:')  );
-			$projectName  		= trim( $this->getOption('project:')  );
-			$overrideIfExists  	= trim( $this->getOption('overrideIfExists')  );
+	private function generateFromDb()
+	{
+		$host = trim($this->getOption('host:'));
+		$user = trim($this->getOption('user:'));
+		$pw = trim($this->getOption('pw:'));
+		$datenbank = trim($this->getOption('datenbank:'));
+		$tabelle = trim($this->getOption('table:'));
+		$projectName = trim($this->getOption('project:'));
+		$overrideIfExists = trim($this->getOption('overrideIfExists'));
 
-			$oldStuff = json_decode(base64_decode(file_get_contents(__DIR__.'/lastTemp.dat')),true);
-
-
-			$newLocalhost 	= $oldStuff['localhost'];
-			$newUser		= $oldStuff['user'];
-			$newPw			= $oldStuff['pw'];
-			$newDatenbank	= $oldStuff['datenbank'];
-
-			if ($projectName ==''){ $projectName 		= $this->asktProject(); }
-			if ($localhost == ''){	$newLocalhost 		= readline('localhost ('.$newLocalhost.'): '); }
-			if ($user == ''){		$newUser 			= readline('user ('.$newUser.'): '); }
-			if ($pw == ''){			$newPw 				= readline('pw (******): '); }
-			if ($datenbank == ''){	$newDatenbank 		= readline('datenbank ('.$newDatenbank.'): '); }
-
-			if (trim($newLocalhost)!=''){	$localhost = $newLocalhost; }
-			if (trim($newUser)!=''){		$user =$newUser; }
-			if (trim($newPw)!=''){			$pw = $newPw; }
-			if (trim($newDatenbank)!=''){	$datenbank = $newDatenbank;}
-
-			file_put_contents( __DIR__.'/lastTemp.dat', base64_encode(json_encode(
-					array(
-						'localhost' => $localhost,
-						'user' => $user,
-						'pw' => $pw,
-						'datenbank' => $datenbank
-					)
-			)));
-
-			$mysql = new MysqlCreator();
-			$mysql->setProjectName( $projectName );
-			$mysql->setLocalhost( $localhost);
-			$mysql->setUser( $user);
-			$mysql->setPw( $pw);
-			$mysql->setDatenbank( $datenbank);
-			$mysql->setTabelle( $tabelle);
-			$mysql->setOverrideIfExists( $overrideIfExists);
-			$mysql->createDatenmodelle();
-
-	}
+		$oldStuff = json_decode(base64_decode(file_get_contents(__DIR__ . '/../data/lastTemp.dat')), true);
 
 
+		if ($projectName == '') {
+			$projectName = $this->asktProject();
+		}
 
-	private function generate(){
-			$projectName  = trim( $this->getOption('project:')  );
-			$templateName = trim( $this->getOption('template:') );
-
-			if ($projectName ==''){ $projectName = $this->asktProject(); }
-			if ($templateName==''){ $templateName = $this->asktTemplate(); }
-
-
-			if ( ($projectName !='') &&
-				 ($templateName!='')
-			){
-				$this->generateQuellcode($projectName, $templateName);
+		if ($host== '') {
+			$host = readline('host (' . $oldStuff['host'] . '): ');
+			if (trim($host) == '') {
+				$host = $oldStuff['host'];
 			}
+		}
+
+		if ($user == '') {
+			$user = readline('user (' . $oldStuff['user'] . '): ');
+			if (trim($user) == '') {
+				$user = $oldStuff['user'];
+			}
+		}
+
+		if ($pw == '') {
+			$pw = readline('pw ('.str_pad('',strlen($oldStuff['pw']),'*').'): ');
+			if (trim($pw) == '') {
+				$pw = $oldStuff['pw'];
+			}
+		}
+
+		if ($datenbank == '') {
+			$datenbank = readline('datenbank (' . $oldStuff['datenbank'] . '): ');
+			if (trim($datenbank) == '') {
+				$datenbank = $oldStuff['datenbank'];
+			}
+		}
+
+		file_put_contents(__DIR__ . '/../data/lastTemp.dat', base64_encode(json_encode(
+			array(
+				'host' => $host,
+				'user' => $user,
+				'pw' => $pw,
+				'datenbank' => $datenbank
+			)
+		)));
+
+		$mysql = new MysqlCreator();
+		$mysql->setProjectName($projectName);
+		$mysql->setLocalhost($host);
+		$mysql->setUser($user);
+		$mysql->setPw($pw);
+		$mysql->setDatenbank($datenbank);
+		$mysql->setTabelle($tabelle);
+		$mysql->setOverrideIfExists($overrideIfExists);
+		$mysql->createDatenmodelle();
+
 	}
 
 
-	private function generateQuellcode($projectName, $templateName){
+	private function generate()
+	{
+		$projectName = trim($this->getOption('project:'));
+		$templateName = trim($this->getOption('template:'));
+
+		if ($projectName == '') {
+			$projectName = $this->asktProject();
+		}
+		if ($templateName == '') {
+			$templateName = $this->asktTemplate();
+		}
+
+
+		if (($projectName != '') &&
+			($templateName != '')
+		) {
+			$this->generateQuellcode($projectName, $templateName);
+		}
+	}
+
+
+	private function generateQuellcode($projectName, $templateName)
+	{
 		$creator = new Creator();
-		$creator-> setProject($projectName);
-		$creator-> setTemplate($templateName);
-		$creator-> run();
+		$creator->setProject($projectName);
+		$creator->setTemplate($templateName);
+		$creator->run();
 	}
 
 
-	private function asktProject(){
+	private function asktProject()
+	{
 		$return = '';
 		Log::writeLogLn('Liste aller Projekte:');
 		Log::writeLogLn('=====================');
 		Log::writeLogLn('');
-		$projectDir = __DIR__.'/../projects/';
-		$help =  array_diff(scandir( $projectDir ), array('..', '.'));
-		foreach ($help as $key => $file){
-			if (is_dir($projectDir.$file)){
-				Log::writeLogLn(($key-1).' '.$file);
+		$projectDir = __DIR__ . '/../projects/';
+		$help = array_diff(scandir($projectDir), array('..', '.'));
+		foreach ($help as $key => $file) {
+			if (is_dir($projectDir . $file)) {
+				Log::writeLogLn(($key - 1) . ' ' . $file);
 			}
 		}
 		Log::writeLogLn('');
 		$key = readline('Bitte geben Sie die Nummer des Projektes ein: ');
 		Log::writeLogLn('');
 
-		return $help[($key+1)];
+		return $help[($key + 1)];
 	}
 
-	private function asktTemplate(){
+	private function asktTemplate()
+	{
 		$return = '';
 		Log::writeLogLn('Liste aller Templates:');
 		Log::writeLogLn('=====================');
 		Log::writeLogLn('');
-		$projectDir = __DIR__.'/../templates/';
-		$help =  array_diff(scandir( $projectDir ), array('..', '.'));
-		foreach ($help as $key => $file){
-			if (is_dir($projectDir.$file)){
-				Log::writeLogLn(($key-1).' '.$file);
+		$projectDir = __DIR__ . '/../templates/';
+		$help = array_diff(scandir($projectDir), array('..', '.'));
+		foreach ($help as $key => $file) {
+			if (is_dir($projectDir . $file)) {
+				Log::writeLogLn(($key - 1) . ' ' . $file);
 			}
 		}
 		Log::writeLogLn('');
 		$key = readline('Bitte geben Sie die Nummer des Projektes ein: ');
 		Log::writeLogLn('');
 
-		return $help[($key+1)];
+		return $help[($key + 1)];
 	}
 
 
-	private function createNew(){
-			$projectName  = trim( $this->getOption('project:')  );
-			$templateName = trim( $this->getOption('template:') );
+	private function createNew()
+	{
+		$projectName = trim($this->getOption('project:'));
+		$templateName = trim($this->getOption('template:'));
 
-			if ($projectName !=''){ $this->createProject($projectName); }
-			if ($templateName!=''){ $this->createTemplate($templateName); }
+		if ($projectName != '') {
+			$this->createProject($projectName);
+		}
+		if ($templateName != '') {
+			$this->createTemplate($templateName);
+		}
 
 	}
 
-	private function createProject($projectName){
-			$help = new ProjectCreator();
-			$help->setProjectName($projectName);
-			$help->setOverrideIfExists( $this->getOption('overrideIfExists') );
-			$help->create();
+	private function createProject($projectName)
+	{
+		$help = new ProjectCreator();
+		$help->setProjectName($projectName);
+		$help->setOverrideIfExists($this->getOption('overrideIfExists'));
+		$help->create();
 	}
 
-	private function createTemplate($templateName){
-			$help = new TemplateCreator();
-			$help->setTemplateName($templateName);
-			$help->setOverrideIfExists( $this->getOption('overrideIfExists') );
-			$help->create();
+	private function createTemplate($templateName)
+	{
+		$help = new TemplateCreator();
+		$help->setTemplateName($templateName);
+		$help->setOverrideIfExists($this->getOption('overrideIfExists'));
+		$help->create();
 	}
 
 	/**
@@ -162,15 +202,18 @@ class Dispatcher
 	 */
 	private $options = array();
 
-	private function getOption($option){
-		if ( !key_exists($option,$this->options ) ){
-			$help = getopt('',array($option));
+	private function getOption($option)
+	{
+		if (!key_exists($option, $this->options)) {
+			$help = getopt('', array($option));
 			$optinReturn = $option;
-			if ( substr($optinReturn,-1,1)==':' ){ $optinReturn = substr($optinReturn,0,-1); }
-			if ( key_exists($optinReturn,$help)){
-				if ( substr($option,-1,1)==':' ){
+			if (substr($optinReturn, -1, 1) == ':') {
+				$optinReturn = substr($optinReturn, 0, -1);
+			}
+			if (key_exists($optinReturn, $help)) {
+				if (substr($option, -1, 1) == ':') {
 					$this->options[$option] = $help[$optinReturn];
-				}else{
+				} else {
 					$this->options[$option] = true;
 				}
 			}
@@ -179,8 +222,8 @@ class Dispatcher
 	}
 
 
-
-	private function paintHelp(){
+	private function paintHelp()
+	{
 		Log::writeLogLn('Codecreator vom LOESUNGSWERK');
 		Log::writeLogLn('=============================');
 		Log::writeLogLn('create options');

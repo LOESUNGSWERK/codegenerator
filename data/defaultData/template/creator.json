@@ -7,27 +7,27 @@
   "tasks": [
      {
       "caption": "Index Seite",
-      "insertTemplateFile": "index/index.html",
-      "destinationFile": "index.html",
+      "insertTemplateFile": "index/index.twig",
+      "destinationFile": "index.twig",
       "onUpdate": "REPLACE",
       "replaceTasks": [
         {
           "detect" : "<!-- detect {{tableName|ucf}} li -->",
           "replaceAfter" : "<!-- myDatenmodelleLi -->",
-          "templateFile" : "index/datenmodelleLi.html"
+          "templateFile" : "index/datenmodelleLi.twig"
         },
         {
           "detect" : "<!-- detect {{tableName|ucf}} Div -->",
           "replaceAfter" : "<!-- myDatenmodelleDiv -->",
-          "templateFile" : "index/datenmodellDiv.html"
+          "templateFile" : "index/datenmodellDiv.twig"
         }
       ],
       "aktiv": true
     },
     {
       "caption": "Datemmodel",
-      "insertTemplateFile": "dm.html",
-      "destinationFile": "{{tableName|ucf}}.html",
+      "insertTemplateFile": "dm.twig",
+      "destinationFile": "{{tableName|ucf}}.twig",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     }
