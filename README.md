@@ -1,4 +1,4 @@
-#... Ist immer noch ALPHA 
+# ... Ist immer noch ALPHA 
 das ist immer noch eher ein How can i work with GIT - test...
  
 # codegenerator
