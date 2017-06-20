@@ -8,5 +8,5 @@
 
 $loader = include __DIR__.'/vendor/autoload.php';
 error_reporting(E_ALL & ~E_NOTICE );
-$creator = new \RkuCreator\Creator();
+$creator = new \RkuCreator\Dispatcher();
 $creator->run();

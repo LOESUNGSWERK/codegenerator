@@ -14,25 +14,20 @@ class Creator
 
 
 	private $data;
+	private $project;
+	private $template;
 
 	public function run(){
 	    Log::writeLogLn('Start');
-		$projets = json_decode( file_get_contents( __DIR__ .'/../creator.json'), true);
-		while (list($key,$val)=@each($projets['projects'])){
-			Log::writeLogLn('');
-		    Log::writeLogLn('');
-		    $this->executeProject($val);
-		    Log::writeLogLn('');
-		    Log::writeLogLn('');
-		}
+		$this->executeProject();
+		Log::writeLogLn('fertig');
 	}
 
-	private function executeProject($data){
+	private function executeProject(){
+		$data = array();
         $startTime = microtime(true);
-		$this->data = array('project'=>$data);
-		unset($this->data['project']['defaults']);
-		$template 		= $data['template'];
-		$project 		= $data['project'];
+		$template 		= $this->template;
+		$project 		= $this->project;
 		$templatePath 	= __DIR__ .'/../templates/'.$template.'/';
 		$projectPath 	= __DIR__ .'/../projects/'.$project;
 		$templateDaten	= array_merge(
@@ -113,6 +108,39 @@ class Creator
 		}
 
 	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getProject()
+	{
+		return $this->project;
+	}
+
+	/**
+	 * @param mixed $project
+	 */
+	public function setProject($project)
+	{
+		$this->project = $project;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getTemplate()
+	{
+		return $this->template;
+	}
+
+	/**
+	 * @param mixed $template
+	 */
+	public function setTemplate($template)
+	{
+		$this->template = $template;
+	}
+
 
 
 }

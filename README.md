@@ -1,9 +1,34 @@
-#codegenerator
+# codegenerator
 wandelt ein Datenmodell über freih configurierbare Controler und Views in Files um. So kann mann für jede Sprache code erzeugen..
 * das Datenmodell sind json-files mit Datatypes und Master-Detailbeziehungen
 
+## commandline
+```
+Codecreator vom LOESUNGSWERK
+=============================
+create options
 
-##Projekt-Configuration
+        --newProject `projektname` :: legt ein neues Projekt unter ./projects/`projektname`/ an und füllt es mit dumydaten 
+        --newTemplate `templatetname` :: legt ein neues Template unter ./templares/`templatetname`/ an 
+
+        --generate  :: erzeugt den Quellcode
+        --generate --project `projektname` :: erzeugt den quellcode für das angegbene Projet 
+        --generate --template`templatetname` :: erzeugt den quellcode für das angegebe Template
+        --generate --project `projektname` --template`templatetname` :: erzeugt den quellcode für das angegbene Projet mit dem angegeben Template
+
+        --generateFormDb  :: erzeugt das Datenmodell aus einer Datenbank
+        --generateFormDb --localhost --user --pw --datenbank --table --project --overrideIfExists
+
+
+Beispiele:
+create --newProject Demo2.0
+create --newTemplate angular.js
+create --generateFormDb --localhost localhost --pot 3306 --user test --pw geheim --datenbank testDb --project Demo2.0
+create --generate --project Demo2.0 --template angular.js
+```
+
+
+## Projekt-Configuration
 ```json
 {
   "projects"       : [
@@ -16,7 +41,8 @@ wandelt ein Datenmodell über freih configurierbare Controler und Views in Files
 }
 ```
 
-##Code-Template
+## Code-Templates
+### templates/demo/creator.json
 ```json
 {
   "creator": "LÖSUNGSWERK",
@@ -55,8 +81,8 @@ wandelt ein Datenmodell über freih configurierbare Controler und Views in Files
 }
 ```
 
-##Datenmodell
-### data/Table/user.json
+## Datenmodell
+### projects/Demo/data/Table/user.json
 ```json
 {
     "tableName"         : "users", 
@@ -78,7 +104,7 @@ wandelt ein Datenmodell über freih configurierbare Controler und Views in Files
 }
 ```
 
-## data/References/content_user.json
+## projects/Demo/data/References/content_user.json
 ```json
 [
   {
