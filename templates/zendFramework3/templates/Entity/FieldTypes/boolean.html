@@ -1,0 +1,27 @@
+/**
+     * @return boolean
+     */
+    public function get{{item.fieldName|ucf}}()
+    {
+        return $this->{{item.fieldName|lcf}};
+    }
+
+    /**
+     * @return boolean
+     */
+    public function is{{item.fieldName|ucf}}()
+    {
+        return ($this->{{item.fieldName|lcf}} == true);
+    }
+
+
+    /**
+     * @param boolean ${{item.fieldName|lcf}}
+     * @return self
+     */
+    public function set{{item.fieldName|ucf}}(${{item.fieldName|lcf}})
+    {
+        $this->{{item.fieldName|lcf}} = ${{item.fieldName|lcf}};
+        return $this;
+    }
+

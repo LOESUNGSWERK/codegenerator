@@ -7,6 +7,8 @@
 
 namespace {{modulName|ucf}}\Controller;
 
+use {{modulName|ucf}}\Form\{{tableName|ucf}}\{{tableName|ucf}}Form;
+use {{modulName|ucf}}\Model\{{tableName|ucf}}\Repository\{{tableName|ucf}}Repository;
 
 use Zend\Http\Request;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -21,6 +23,27 @@ use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger;
  */
 class {{tableName|ucf}}Controller extends AbstractActionController
 {
+
+    /**
+     * @var {{tableName|ucf}}Repository
+     */
+    protected ${{tableName|lcf}}Repository;
+
+    /**
+     * @var {{tableName|ucf}}Form
+     */
+    private ${{tableName|lcf}}Form;
+
+    /**
+     * {{tableName|ucf}}Controller constructor.
+     * @param {{tableName|ucf}}Repository ${{tableName|lcf}}Table
+     * @param {{tableName|ucf}}Form $form
+     */
+    public function __construct({{tableName|ucf}}Repository ${{tableName|lcf}}Table, {{tableName|ucf}}Form ${{tableName|lcf}}Form)
+    {
+        $this->{{tableName|lcf}}Table = ${{tableName|lcf}}Table;
+        $this->{{tableName|lcf}}Form = ${{tableName|lcf}}Form;
+    }
 
     public function indexAction()
     {

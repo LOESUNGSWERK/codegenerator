@@ -4,6 +4,11 @@
           "caption"     : "XresConfig",
           "project"     : "xresSettings",
           "template"    : "zendFramework3"
+      },
+      {
+          "caption"     : "Demo Daten",
+          "project"     : "Demo",
+          "template"    : "zendFramework3"
       }
   ]
 }

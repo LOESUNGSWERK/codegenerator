@@ -6,7 +6,8 @@
     "tableType"         : "table",
     "extraInformation"  : {
         "hasPictureliste" : false,
-        "isDistributable" : true
+        "isDistributable" : true,
+        "isTree": true
     },
     "fields":[
       {
@@ -19,8 +20,17 @@
           "canBeNull"     : false
       },
       {
+          "fieldName"     : "id",
+          "fieldType"     : "parent_id",
+          "defaultValue"  : null,
+          "isAutoinc"     : false,
+          "isPrimaryKey"  : false,
+          "isIndex"       : true,
+          "canBeNull"     : true
+      },
+      {
           "fieldName"         : "bez1",
-          "fieldType"         : "string",
+          "fieldType"         : "label",
           "defaultValue"      : null,
           "isAutoinc"         : false,
           "isPrimaryKey"      : false,
@@ -30,6 +40,15 @@
                 "minLength" : 20,
                 "maxLength" : 50
           }
+      },
+      {
+          "fieldName"         : "tree",
+          "fieldType"         : "treePath",
+          "defaultValue"      : 0,
+          "isAutoinc"         : false,
+          "isPrimaryKey"      : false,
+          "isIndex"           : true,
+          "canBeNull"         : false
       }
 
     ]

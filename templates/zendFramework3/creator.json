@@ -4,13 +4,15 @@
   "caption": "zendFrameWork3-MVC",
   "description": "baut ein MVC-Pattern für zendFramework3",
   "target": "./zendFramework/",
+  "fieldTypes":[ "integer","string","boolean","float","text","label","combo","treePath"],
   "defaults": {
     "table": {
       "isDepricated": false,
       "tableType": "table",
       "extraInformation": {
         "hasPictureliste": true,
-        "isDistributable": true
+        "isDistributable": true,
+        "isTree": false
       }
     },
     "field": {
