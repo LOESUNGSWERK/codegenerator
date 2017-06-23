@@ -18,7 +18,7 @@ class MysqlCreator extends AbstractCreator
 	private $datenbank;
 	private $tabelle;
 	private $projectName;
-	private $overrideIfExists;
+	private $overrideIfExists = true;
 
 	/**
 	 * @var \mysqli
@@ -32,34 +32,65 @@ class MysqlCreator extends AbstractCreator
 		if ($this->mySql->connect_error) { die('Connect Error (' . $this->mySql->connect_errno . ') '. $this->mySql->connect_error); }
 		Log::writeLogLn('...verbunden');
 		$this->getTables();
-
-
+		$this->getReferences();
 		$this->mySql->close();
+	}
+
+	private function getReferences(){
+		$result = $this->mySql->query('SELECT CONSTRAINT_NAME, TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME, REFERENCED_TABLE_SCHEMA, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA= "'.$this->mySql->escape_string($this->datenbank).'" AND REFERENCED_TABLE_SCHEMA is not null' );
+		while ($myrow = $result->fetch_array(MYSQLI_ASSOC)){
+		  $filename = $this->generatePathToProject($this->projectName).'data/References/'.$this->cleanFileName($myrow['CONSTRAINT_NAME']).'.json';
+			if (!file_exists($filename) or $this->overrideIfExists){
+				if (!is_dir(pathinfo($filename,PATHINFO_DIRNAME))){
+					mkdir(pathinfo($filename,PATHINFO_DIRNAME),0777,true);
+				}
+
+				$datas = [
+					"masterTable"=> $myrow['REFERENCED_TABLE_NAME'],
+					"masterField"=>$myrow['REFERENCED_COLUMN_NAME'],
+					"childrenTable"=> $myrow['TABLE_NAME'],
+					"childrenField"=>$myrow['COLUMN_NAME'],
+					"onDelete"=> null,
+					"onUpdate"=> null,
+					"onInsert"=> null
+				];
+
+				file_put_contents($filename,json_encode([$datas],JSON_PRETTY_PRINT));
+			}
+
+		}
+		$result->close();
 	}
 
 
 	private function getTables(){
 		$tables = array();
-		$result = $this->mySql->query('SHOW FULL TABLES');
-		while ($myrow = $result->fetch_array(MYSQLI_NUM)){
-		  $tables[$myrow[0]]=1;
+		$result = $this->mySql->query('SHOW TABLE STATUS FROM '.$this->mySql->escape_string($this->datenbank) );
+		while ($myrow = $result->fetch_array(MYSQLI_ASSOC)){
+		  $tables[$myrow['Name']]=$myrow;
 		}
 		$result->close();
 
-		while (list($tableName,$val)=@each($tables)){
-			$tables[$tableName] = $this->convertMysqlTable($tableName);
-			file_put_contents($this->generatePathToProject($this->projectName).'data/Table/'.$tableName.'.json',json_encode($tables[$tableName],JSON_PRETTY_PRINT));
+		while (list($tableName,$table)=@each($tables)){
+			$tables[$tableName] = $this->convertMysqlTable($table);
+			$filename = $this->generatePathToProject($this->projectName).'data/Table/'.$this->cleanFileName($tableName).'.json';
+			if (!file_exists($filename) or $this->overrideIfExists){
+				if (!is_dir(pathinfo($filename,PATHINFO_DIRNAME))){
+					mkdir(pathinfo($filename,PATHINFO_DIRNAME),0777,true);
+				}
+				file_put_contents($filename,json_encode($tables[$tableName],JSON_PRETTY_PRINT));
+			}
 		}
 
 	}
 
-	private function convertMysqlTable($tableName){
+	private function convertMysqlTable($table){
 		$return = [
-			"tableName"         => $tableName,
-			"desctiption"       => null,
-			"modulName"         => null,
+			"name"         		=> $table['Name'],
+			"desctiption"   	=> $table['Comment'],
+			"modul"         	=> null,
 			"isDepricated"      => false,
-			"tableType"         => "table",
+			"type"         		=> "table",
 			"extraInformation"  => [
 				"hasPictureliste" => false,
 				"isDistributable" => true
@@ -67,7 +98,15 @@ class MysqlCreator extends AbstractCreator
 			"fields" => []
 		];
 
-		$result = $this->mySql->query('SHOW FULL COLUMNS FROM '.$tableName);
+		try {
+			$help = json_decode($table['Comment'],1);
+			$return['desctiption'] 	= $help['description'];
+			$return['modul'] 		= $help['modul'];
+		}
+		catch(Exception $e) { }
+
+
+		$result = $this->mySql->query('SHOW FULL COLUMNS FROM '.$table['Name']);
 		while ($myrow = $result->fetch_array(MYSQLI_ASSOC)){
 		  $return['fields'][] =  $this->convertMysqlFieldToField($myrow);
 		}
@@ -77,8 +116,8 @@ class MysqlCreator extends AbstractCreator
 
 	private function convertMysqlFieldToField($mysqlField){
 		$return = [
-		 	"fieldName"     => $mysqlField["Field"],
-          	"fieldType"     => $this->getType($mysqlField),
+		 	"name"     => $mysqlField["Field"],
+          	"type"     => $this->getType($mysqlField),
           	"defaultValue"  => $mysqlField["Default"],
           	"isAutoinc"     => ($mysqlField["Extra"]=='auto_increment'),
           	"isPrimaryKey"  => ($mysqlField["Key"]=='PRI'),
@@ -94,16 +133,23 @@ class MysqlCreator extends AbstractCreator
 		$help = explode('(',$mysqlField["Type"]);
 		$lenght = substr($help[1],0,-1);
 
-		switch (strtolower($help[0])){
-			case 'int':
+		switch (strtoupper($help[0])){
+			case 'TINYINT': 	case 'SMALLINT':
+			case 'MEDIUMINT': 	case 'INT':
+			case 'INTINTEGER': 	case 'BIGINT':
 				if ($lenght==1){
 					$return='boolean';
 				}else{
 					$return = 'integer';
 				}
 			break;
+			case 'DOUBLE':	case 'REAL':
+			case 'NUMERIC':	case 'DECIMAL':
+				$return = 'float';
+			break;
 
-			case 'varchar':
+			case 'CHAR':
+			case 'VARCHAR':
 				if (in_array(strtolower($mysqlField["Field"]),['bez','label','bez1','kbez','lbez'])){
 					$return = 'label';
 				}elseif ($lenght<200){
@@ -113,12 +159,13 @@ class MysqlCreator extends AbstractCreator
 				}
 			break;
 
-			case 'timestamp':
-				$return = 'dateTime';
+			case 'DATE':		case 'DATETIME':
+			case 'TIMESTAMP':
+				$return = 'datetime';
 			break;
 
 			default:
-				return $help[0];
+				return strtolower($help[0]);
 		}
 
 		return $return;
