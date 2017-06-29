@@ -8,16 +8,16 @@
      {
       "caption": "Index Seite",
       "insertTemplateFile": "index/index.twig",
-      "destinationFile": "index.twig",
+      "destinationFile": "index.html",
       "onUpdate": "REPLACE",
       "replaceTasks": [
         {
-          "detect" : "<!-- detect {{tableName|ucf}} li -->",
+          "detect" : "<!-- detect {{name|ucf}} li -->",
           "replaceAfter" : "<!-- myDatenmodelleLi -->",
           "templateFile" : "index/datenmodelleLi.twig"
         },
         {
-          "detect" : "<!-- detect {{tableName|ucf}} Div -->",
+          "detect" : "<!-- detect {{name|ucf}} Div -->",
           "replaceAfter" : "<!-- myDatenmodelleDiv -->",
           "templateFile" : "index/datenmodellDiv.twig"
         }
@@ -27,7 +27,7 @@
     {
       "caption": "Datemmodel",
       "insertTemplateFile": "dm.twig",
-      "destinationFile": "{{tableName|ucf}}.twig",
+      "destinationFile": "{{name|ucf}}.html",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     }

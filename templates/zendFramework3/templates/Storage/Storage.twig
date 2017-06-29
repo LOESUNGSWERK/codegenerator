@@ -5,7 +5,7 @@
  * @since      11.05.17
  */
 
-namespace {{modulName|ucf}}\Model\{{tableName|ucf}}\Storage;
+namespace {{modulName|ucf}}\Model\{{name|ucf}}\Storage;
 
 use Application\Model\Settings\Entity\SettingsEntity;
 use Application\Model\Settings\Hydrator\SettingsDbHydrator;
@@ -14,10 +14,10 @@ use Zend\Db\TableGateway\AbstractTableGateway;
 use Zend\Db\TableGateway\TableGatewayInterface;
 
 /**
- * Class {{tableName|ucf}}Storage
- * @package {{modulName|ucf}}\Model\{{tableName|ucf}}\Storage
+ * Class {{name|ucf}}Storage
+ * @package {{modulName|ucf}}\Model\{{name|ucf}}\Storage
  */
-class {{tableName|ucf}}Storage
+class {{name|ucf}}Storage
 {
 
     /**
@@ -26,19 +26,19 @@ class {{tableName|ucf}}Storage
     private $tableGateway;
 
     /**
-     * @var {{tableName|ucf}}DbHydrator
+     * @var {{name|ucf}}DbHydrator
      */
     private $hydrator;
 
     /**
-     * {{tableName|ucf}}Storage constructor.
+     * {{name|ucf}}Storage constructor.
      *
      * @param TableGatewayInterface $tableGateway
      */
     public function __construct(TableGatewayInterface $tableGateway)
     {
         $this->tableGateway = $tableGateway;
-        $this->hydrator = new {{tableName|ucf}}DbHydrator();
+        $this->hydrator = new {{name|ucf}}DbHydrator();
     }
 
 
@@ -52,33 +52,33 @@ class {{tableName|ucf}}Storage
         /** @var ResultSet $resultSet */
         $resultSet = $this->tableGateway->selectWith($select);
 
-        return $this->hydrator->hydrate( $resultSet->current() , new {{tableName|ucf}}Entity($this) );
+        return $this->hydrator->hydrate( $resultSet->current() , new {{name|ucf}}Entity($this) );
     }
 
     /**
-     * @param {{tableName|ucf}}Entity ${{tableName|lcf}}
+     * @param {{name|ucf}}Entity ${{name|lcf}}
      * @return bool
      */
-    public function update(${{tableName|lcf}})
+    public function update(${{name|lcf}})
     {
 
         $update = $this->tableGateway->getSql()->update();
-        $updateData = $this->hydrator->extract(${{tableName|lcf}});
+        $updateData = $this->hydrator->extract(${{name|lcf}});
 
         $update->set($updateData);
-        $update->where->equalTo('id', ${{tableName|lcf}}->getId());
+        $update->where->equalTo('id', ${{name|lcf}}->getId());
 
         return $this->tableGateway->updateWith($update) > 0;
     }
 
     /**
-     * @param {{tableName|ucf}}Entity ${{tableName|lcf}}
+     * @param {{name|ucf}}Entity ${{name|lcf}}
      * @return int
      */
-    public function insert(${{tableName|lcf}})
+    public function insert(${{name|lcf}})
     {
         $insert = $this->tableGateway->getSql()->insert();
-        $insertData = $this->hydrator->extract(${{tableName|lcf}});
+        $insertData = $this->hydrator->extract(${{name|lcf}});
         $insert->values($insertData);
         return $this->tableGateway->getLastInsertValue();
     }

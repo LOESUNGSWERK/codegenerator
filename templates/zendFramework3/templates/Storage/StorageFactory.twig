@@ -5,7 +5,7 @@
  * @since      11.05.17
  */
 
-namespace {{modulName|ucf}}\Model\{{tableName|ucf}}\Storage;
+namespace {{modulName|ucf}}\Model\{{name|ucf}}\Storage;
 
 use Interop\Container\ContainerInterface;
 use Zend\Db\ResultSet\ResultSet;
@@ -13,15 +13,15 @@ use Zend\Db\TableGateway\TableGateway;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
- * Class {{tableName|ucf}}StorageFactory
- * @package {{modulName|ucf}}\Model\{{tableName|ucf}}\Storage
+ * Class {{name|ucf}}StorageFactory
+ * @package {{modulName|ucf}}\Model\{{name|ucf}}\Storage
  */
-class {{tableName|ucf}}StorageFactory implements FactoryInterface
+class {{name|ucf}}StorageFactory implements FactoryInterface
 {
     /**
      * @param ContainerInterface $container
      *
-     * @return {{tableName|ucf}}Storage
+     * @return {{name|ucf}}Storage
      */
     public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
     {
@@ -30,9 +30,9 @@ class {{tableName|ucf}}StorageFactory implements FactoryInterface
         $resultSet = new ResultSet(ResultSet::TYPE_ARRAY);
 
         $tableGateway = new TableGateway(
-            '{{tableName}}', $adapter, null, $resultSet
+            '{{name}}', $adapter, null, $resultSet
         );
 
-        return new {{tableName|ucf}}Storage($tableGateway);
+        return new {{name|ucf}}Storage($tableGateway);
     }
 }

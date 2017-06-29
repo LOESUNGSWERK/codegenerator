@@ -5,19 +5,19 @@
  * @since      11.05.17
  */
 
-namespace {{modulName|ucf}}\Form\{{tableName|ucf}};
+namespace {{modulName|ucf}}\Form\{{name|ucf}};
 
-use {{modulName|ucf}}\Model\{{tableName|ucf}}\Entity\{{tableName|ucf}}Entity;
+use {{modulName|ucf}}\Model\{{name|ucf}}\Entity\{{name|ucf}}Entity;
 use Zend\Form\Element\Csrf;
 use Zend\Form\Element\Submit;
 use Zend\Form\Element\Text;
 use Zend\Form\Form;
 
 /**
- * Class {{tableName|ucf}}Form
- * @package {{modulName|ucf}}\Form\{{tableName|ucf}}
+ * Class {{name|ucf}}Form
+ * @package {{modulName|ucf}}\Form\{{name|ucf}}
  */
-class {{tableName|ucf}}Form extends Form
+class {{name|ucf}}Form extends Form
 {
 
     /**
@@ -25,26 +25,26 @@ class {{tableName|ucf}}Form extends Form
      */
     public function init()
     {
-        $this->setName('{{tableName}}');
+        $this->setName('{{name}}');
         $this->setAttribute('class', 'form-horizontal');
         $this->add(['type' => Csrf::class,'name' => 'csrf',]);
         {% if fields|length > 0 %}{% for item in fields %}
-        $this->add{{item.fieldName|ucf}}();
+        $this->add{{item.name|ucf}}();
         {% endfor %}{% endif %}
         $this->addSubmit();
     }
 
     {% if fields|length > 0 %}{% for item in fields %}
-    private function add{{item.fieldName|ucf}}(){
+    private function add{{item.name|ucf}}(){
         $this->add(
             [
                 'type'       => Text::class,
-                'name'       => '{{item.fieldName}}',
+                'name'       => '{{item.name}}',
                 'attributes' => [
                     'class' => 'form-control',
                 ],
                 'options'    => [
-                    'label'            => '{{item.fieldName|ucf}}',
+                    'label'            => '{{item.name|ucf}}',
                     'label_attributes' => [
                         'class' => 'col-sm-2 control-label',
                     ],

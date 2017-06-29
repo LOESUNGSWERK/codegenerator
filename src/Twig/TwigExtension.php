@@ -65,6 +65,9 @@ class TwigExtension extends \Twig_Extension
 		$help = explode($seperator,$string);
 		@reset($help);
 		while (list($key,$val)=@each($help)){
+			if (strtoupper($val)==$val){
+				$val = strtolower($val);
+			}
 			$return .= ucfirst($val);
 		}
 		return $return;

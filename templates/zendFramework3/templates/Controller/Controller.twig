@@ -7,8 +7,8 @@
 
 namespace {{modulName|ucf}}\Controller;
 
-use {{modulName|ucf}}\Form\{{tableName|ucf}}\{{tableName|ucf}}Form;
-use {{modulName|ucf}}\Model\{{tableName|ucf}}\Repository\{{tableName|ucf}}Repository;
+use {{modulName|ucf}}\Form\{{name|ucf}}\{{name|ucf}}Form;
+use {{modulName|ucf}}\Model\{{name|ucf}}\Repository\{{name|ucf}}Repository;
 
 use Zend\Http\Request;
 use Zend\Mvc\Controller\AbstractActionController;
@@ -21,28 +21,28 @@ use Zend\Mvc\Plugin\FlashMessenger\FlashMessenger;
  * @method Request getRequest()
  * @method  FlashMessenger flashMessenger()
  */
-class {{tableName|ucf}}Controller extends AbstractActionController
+class {{name|ucf}}Controller extends AbstractActionController
 {
 
     /**
-     * @var {{tableName|ucf}}Repository
+     * @var {{name|ucf}}Repository
      */
-    protected ${{tableName|lcf}}Repository;
+    protected ${{name|lcf}}Repository;
 
     /**
-     * @var {{tableName|ucf}}Form
+     * @var {{name|ucf}}Form
      */
-    private ${{tableName|lcf}}Form;
+    private ${{name|lcf}}Form;
 
     /**
-     * {{tableName|ucf}}Controller constructor.
-     * @param {{tableName|ucf}}Repository ${{tableName|lcf}}Table
-     * @param {{tableName|ucf}}Form $form
+     * {{name|ucf}}Controller constructor.
+     * @param {{name|ucf}}Repository ${{name|lcf}}Table
+     * @param {{name|ucf}}Form $form
      */
-    public function __construct({{tableName|ucf}}Repository ${{tableName|lcf}}Table, {{tableName|ucf}}Form ${{tableName|lcf}}Form)
+    public function __construct({{name|ucf}}Repository ${{name|lcf}}Table, {{name|ucf}}Form ${{name|lcf}}Form)
     {
-        $this->{{tableName|lcf}}Table = ${{tableName|lcf}}Table;
-        $this->{{tableName|lcf}}Form = ${{tableName|lcf}}Form;
+        $this->{{name|lcf}}Table = ${{name|lcf}}Table;
+        $this->{{name|lcf}}Form = ${{name|lcf}}Form;
     }
 
     public function indexAction()

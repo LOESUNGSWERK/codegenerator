@@ -1,16 +1,16 @@
-<!-- detect {{tableName|ucf}} Div -->
+<!-- detect {{name|ucf}} Div -->
 
 <div class="col-sm-6">
   <div class="table-responsive">
-    <h3>{{tableName|ucf}}</h3>
+    <h3>{{name|ucf}}</h3>
     <table class="table table-striped table-hover">
         <caption>zeig alle Definierten Felder</caption>
         <thead>
         <tr>
             <th>#</th>
-            <th>fieldName</th>
-            <th>fieldName Ucf</th>
-            <th>fieldName Lcf</th>
+            <th>name</th>
+            <th>name Ucf</th>
+            <th>name Lcf</th>
             <th>fieldType</th>
             <th>canBeNull</th>
             <th>isIndex</th>
@@ -24,9 +24,9 @@
         {% for item in fields %}
         <tr>
             <th scope="row">{{ loop.index }}</th>
-            <td>{{item.fieldName}}</td>
-            <td>{{item.fieldName|ucf}}</td>
-            <td>{{item.fieldName|lcf}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.name|ucf}}</td>
+            <td>{{item.name|lcf}}</td>
             <td>{{item.fieldType}}</td>
             <td>{{item.canBeNull}}</td>
             <td>{{item.isIndex}}</td>

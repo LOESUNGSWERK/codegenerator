@@ -5,47 +5,47 @@
  * @since      11.05.17
  */
 
-namespace {{modulName|ucf}}\Model\{{tableName|ucf}}\Repository;
+namespace {{modulName|ucf}}\Model\{{name|ucf}}\Repository;
 
-use {{modulName|ucf}}\Model\{{tableName|ucf}}\Entity\{{tableName|ucf}}Entity;
-use {{modulName|ucf}}\Model\{{tableName|ucf}}\Storage\{{tableName|ucf}}Storage;
+use {{modulName|ucf}}\Model\{{name|ucf}}\Entity\{{name|ucf}}Entity;
+use {{modulName|ucf}}\Model\{{name|ucf}}\Storage\{{name|ucf}}Storage;
 
 /**
- * Class {{tableName|ucf}}Repository
- * @package {{modulName|ucf}}\Model\{{tableName|ucf}}\Repository;
+ * Class {{name|ucf}}Repository
+ * @package {{modulName|ucf}}\Model\{{name|ucf}}\Repository;
  */
-class {{tableName|ucf}}Repository
+class {{name|ucf}}Repository
 {
     /**
-     * @var {{tableName|ucf}}Storage
+     * @var {{name|ucf}}Storage
      */
-    private ${{tableName|lcf}}Storage;
+    private ${{name|lcf}}Storage;
 
-    public function __construct({{tableName|ucf}}Storage ${{tableName|lcf}}Storage)
+    public function __construct({{name|ucf}}Storage ${{name|lcf}}Storage)
     {
-        $this->{{tableName|lcf}}Storage = ${{tableName|lcf}}Storage;
+        $this->{{name|lcf}}Storage = ${{name|lcf}}Storage;
     }
 
     /**
-     * @param {{tableName|ucf}}Entity ${{tableName|lcf}}
+     * @param {{name|ucf}}Entity ${{name|lcf}}
      */
-    public function save(${{tableName|lcf}})
+    public function save(${{name|lcf}})
     {
-        if (!${{tableName|lcf}}->getId()) {
-            return $this->{{tableName|lcf}}Storage->insert(${{tableName|ucf}});
+        if (!${{name|lcf}}->getId()) {
+            return $this->{{name|lcf}}Storage->insert(${{name|ucf}});
         } else {
-            return $this->{{tableName|lcf}}Storage->update(${{tableName|ucf}});
+            return $this->{{name|lcf}}Storage->update(${{name|ucf}});
         }
     }
 
 
     /**
      * @param integer $id
-     * @return {{tableName|ucf}}Entity
+     * @return {{name|ucf}}Entity
      */
-    public function get{{tableName|ucf}}ById($id)
+    public function get{{name|ucf}}ById($id)
     {
-        return $this->{{tableName|lcf}}Storage->getById($id);
+        return $this->{{name|lcf}}Storage->getById($id);
     }
 
 

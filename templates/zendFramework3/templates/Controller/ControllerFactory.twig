@@ -7,17 +7,17 @@
 
 namespace {{modulName|ucf}}\Controller;
 
-use {{modulName|ucf}}\Form\{{tableName|ucf}}\{{tableName|ucf}}Form;
-use {{modulName|ucf}}\Model\{{tableName|ucf}}\Repository\{{tableName|ucf}}Repository;
+use {{modulName|ucf}}\Form\{{name|ucf}}\{{name|ucf}}Form;
+use {{modulName|ucf}}\Model\{{name|ucf}}\Repository\{{name|ucf}}Repository;
 
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
 
 /**
- * Class {{tableName|ucf}}ControllerFactory
+ * Class {{name|ucf}}ControllerFactory
  * @package {{modulName|ucf}}\Controller
  */
-class {{tableName|ucf}}ControllerFactory implements FactoryInterface
+class {{name|ucf}}ControllerFactory implements FactoryInterface
 {
     public function __invoke(
         ContainerInterface $container,
@@ -25,9 +25,9 @@ class {{tableName|ucf}}ControllerFactory implements FactoryInterface
         array $options = null
     ) {
 
-        return new {{tableName|ucf}}Controller(
-            $container->get({{tableName|ucf}}Repository::class),
-            $container->get('FormElementManager')->get({{tableName|ucf}}Form::class)
+        return new {{name|ucf}}Controller(
+            $container->get({{name|ucf}}Repository::class),
+            $container->get('FormElementManager')->get({{name|ucf}}Form::class)
         );
 
     }

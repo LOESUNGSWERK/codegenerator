@@ -77,13 +77,13 @@ class Creator extends AbstractCreator
 			$table['fields'] = array();
 			while (list($key,$val)=@each($fields)){
 				$tableField = array_merge($defaults['field'],$val);
-				$table['fields'][$tableField['fieldName']] = $tableField;
-				$table['fieldsByTypes'][$tableField['fieldType']][$tableField['fieldName']] = $tableField;
-				if($val['isPrimaryKey']){ 	$table['primaryFields'][$tableField['fieldName']] = $tableField; }
-				if($val['isIndex']){ 		$table['indexFields'][$tableField['fieldName']] = $tableField; }
+				$table['fields'][$tableField['name']] = $tableField;
+				$table['fieldsByTypes'][$tableField['fieldType']][$tableField['name']] = $tableField;
+				if($val['isPrimaryKey']){ 	$table['primaryFields'][$tableField['name']] = $tableField; }
+				if($val['isIndex']){ 		$table['indexFields'][$tableField['name']] = $tableField; }
 			}
-			$this->data['tables'][$table['tableName']]=$table;
-			$this->data['module'][$table['modulName']][]=$table['tableName'];
+			$this->data['tables'][$table['name']]=$table;
+			$this->data['module'][$table['modul']][]=$table['name'];
 
 		}
 

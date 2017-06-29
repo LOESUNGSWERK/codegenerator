@@ -5,26 +5,26 @@
  * @since      16.05.17
  */
 
-namespace {{modulName|ucf}}\Model\{{tableName|ucf}}\Hydrator;
+namespace {{modulName|ucf}}\Model\{{name|ucf}}\Hydrator;
 
-use {{modulName|ucf}}\Model\{{tableName|ucf}}\Entity\{{tableName|ucf}}Entity;
+use {{modulName|ucf}}\Model\{{name|ucf}}\Entity\{{name|ucf}}Entity;
 use Zend\Hydrator\AbstractHydrator;
 use Zend\Hydrator\HydratorInterface;
 
 /**
- * Class {{tableName|ucf}}DbHydrator
- * @package {{modulName|ucf}}\Model\{{tableName|ucf}}\Hydrator
+ * Class {{name|ucf}}DbHydrator
+ * @package {{modulName|ucf}}\Model\{{name|ucf}}\Hydrator
  */
-class {{tableName|ucf}}DbHydrator extends AbstractHydrator implements HydratorInterface
+class {{name|ucf}}DbHydrator extends AbstractHydrator implements HydratorInterface
 {
     /**
-     * @param {{tableName|ucf}}Entity $object
+     * @param {{name|ucf}}Entity $object
      * @return array
      */
     public function extract($object){
         return  array(
         {% if fields|length > 0 %}{% for item in fields %}
-             '{{item.fieldName}}' => $object->get{{item.fieldName|ucf}}(){% if loop.last != true %},{% endif %}
+             '{{item.name}}' => $object->get{{item.name|ucf}}(){% if loop.last != true %},{% endif %}
         {% endfor %}{% endif %}
         );
 
@@ -38,7 +38,7 @@ class {{tableName|ucf}}DbHydrator extends AbstractHydrator implements HydratorIn
     public function hydrate(array $data, $object)
     {
         {% if fields|length > 0 %}{% for item in fields %}
-            $object->set{{item.fieldName|ucf}}($data['{{item.fieldName}}']);
+            $object->set{{item.name|ucf}}($data['{{item.name}}']);
         {% endfor %}{% endif %}
         return $object;
     }

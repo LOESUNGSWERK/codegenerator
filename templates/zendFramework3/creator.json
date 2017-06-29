@@ -32,77 +32,77 @@
     {
       "caption": "Entity",
       "insertTemplateFile": "Entity/Entity.twig",
-      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{tableName|ucf}}/Entity/{{tableName|ucf}}Entity.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{name|ucf}}/Entity/{{name|ucf}}Entity.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "StorageFactory",
       "insertTemplateFile": "Storage/StorageFactory.twig",
-      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{tableName|ucf}}/Storage/{{tableName|ucf}}StorageFactory.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{name|ucf}}/Storage/{{name|ucf}}StorageFactory.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "Storage",
       "insertTemplateFile": "Storage/Storage.twig",
-      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{tableName|ucf}}/Storage/{{tableName|ucf}}Storage.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{name|ucf}}/Storage/{{name|ucf}}Storage.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "Repository",
       "insertTemplateFile": "Repository/Repository.twig",
-      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{tableName|ucf}}/Repository/{{tableName|ucf}}Repository.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{name|ucf}}/Repository/{{name|ucf}}Repository.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "RepositoryFactory",
       "insertTemplateFile": "Repository/RepositoryFactory.twig",
-      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{tableName|ucf}}/Repository/{{tableName|ucf}}RepositoryFactory.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{name|ucf}}/Repository/{{name|ucf}}RepositoryFactory.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "DbHydrator",
       "insertTemplateFile": "Hydrator/DbHydrator.twig",
-      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{tableName|ucf}}/Hydrator/{{tableName|ucf}}DbHydrator.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{name|ucf}}/Hydrator/{{name|ucf}}DbHydrator.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "PostHydrator",
       "insertTemplateFile": "Hydrator/PostHydrator.twig",
-      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{tableName|ucf}}/Hydrator/{{tableName|ucf}}PostHydrator.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Model/{{name|ucf}}/Hydrator/{{name|ucf}}PostHydrator.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "Form",
       "insertTemplateFile": "Form/Form.twig",
-      "destinationFile": "module/{{modulName|ucf}}/src/Form/{{tableName|ucf}}/{{tableName|ucf}}Form.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Form/{{name|ucf}}/{{name|ucf}}Form.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "FormFactory",
       "insertTemplateFile": "Form/FormFactory.twig",
-      "destinationFile": "module/{{modulName|ucf}}/src/Form/{{tableName|ucf}}/{{tableName|ucf}}FormFactory.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Form/{{name|ucf}}/{{name|ucf}}FormFactory.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "ACL-Rescources",
       "insertTemplateFile": "Permissions/Resource.twig",
-      "destinationFile": "module/{{modulName|ucf}}/src/Permissions/Resource/{{tableName|ucf}}Resource.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Permissions/Resource/{{name|ucf}}Resource.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "Controller",
       "insertTemplateFile": "Controller/Controller.twig",
-      "destinationFile": "module/{{modulName|ucf}}/src/Controller/{{tableName|ucf}}Controller.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Controller/{{name|ucf}}Controller.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
@@ -116,14 +116,14 @@
     {
       "caption": "ControllerFactory",
       "insertTemplateFile": "Controller/ControllerFactory.twig",
-      "destinationFile": "module/{{modulName|ucf}}/src/Controller/{{tableName|ucf}}ControllerFactory.php",
+      "destinationFile": "module/{{modulName|ucf}}/src/Controller/{{name|ucf}}ControllerFactory.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "View-Index",
       "insertTemplateFile": "view/index.twig",
-      "destinationFile": "module/{{modulName|ucf}}/view/{{modulName}}/{{tableName|lcf}}/index.phtml",
+      "destinationFile": "module/{{modulName|ucf}}/view/{{modulName}}/{{name|lcf}}/index.phtml",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
@@ -134,52 +134,52 @@
       "onUpdate": "REPLACE",
       "replaceTasks": [
         {
-          "detect" : "/* use for {{tableName|ucf}} */",
+          "detect" : "/* use for {{name|ucf}} */",
           "replaceAfter" : "/* use includes */",
           "templateFile" : "config/useIncludes.twig"
         },
         {
-          "detect" : "/* route for {{tableName|lcf}} */",
+          "detect" : "/* route for {{name|lcf}} */",
           "replaceAfter" : "/* router routes */",
           "templateFile" : "config/routerRoutes.twig"
         },
         {
-          "detect" : "Controller\\{{tableName|ucf}}Controller::class => {{tableName|ucf}}ControllerFactory::class,",
+          "detect" : "Controller\\{{name|ucf}}Controller::class => {{name|ucf}}ControllerFactory::class,",
           "replaceAfter" : "/* controllers factories */",
           "templateFile" : "config/controllersFactories.twig"
         },
         {
-          "detect" : "/** Hydrators for {{tableName|ucf}} */",
+          "detect" : "/** Hydrators for {{name|ucf}} */",
           "replaceAfter" : "/* hydrators factories */",
           "templateFile" : "config/hydratorsFactories.twig"
         },
         {
-          "detect" : "{{tableName|ucf}}InputFilter::class",
+          "detect" : "{{name|ucf}}InputFilter::class",
           "replaceAfter" : "/* input_filters factories */",
           "templateFile" : "config/inputFiltersFactories.twig"
         },
         {
-          "detect" : "{{tableName|ucf}}Form::class",
+          "detect" : "{{name|ucf}}Form::class",
           "replaceAfter" : "/* form_elements factories */",
           "templateFile" : "config/formElementsFactories.twig"
         },
         {
-          "detect" : "/** Service Manager for {{tableName|ucf}} */",
+          "detect" : "/** Service Manager for {{name|ucf}} */",
           "replaceAfter" : "/*  service_manager factories */",
           "templateFile" : "config/serviceManagerFactories.twig"
         },
         {
-          "detect" : "/* Guest - {{tableName|ucf}}Resource */",
+          "detect" : "/* Guest - {{name|ucf}}Resource */",
           "replaceAfter" : "/* acl GuestRole */",
           "templateFile" : "config/aclGuestRole.twig"
         },
         {
-          "detect" : "/* Admin - {{tableName|ucf}}Resource */",
+          "detect" : "/* Admin - {{name|ucf}}Resource */",
           "replaceAfter" : "/* acl AdminRole */",
           "templateFile" : "config/aclAdminRole.twig"
         },
         {
-          "detect" : "'/../view/{{modulName}}/{{tableName|ucf}}/index.phtml'",
+          "detect" : "'/../view/{{modulName}}/{{name|ucf}}/index.phtml'",
           "replaceAfter" : "/* template_map */",
           "templateFile" : "config/templateMap.twig"
         }

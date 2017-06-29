@@ -5,32 +5,32 @@
  * @since      11.05.17
  */
 
-namespace {{modulName|ucf}}\Model\{{tableName|ucf}}\Entity;
+namespace {{modulName|ucf}}\Model\{{name|ucf}}\Entity;
 
-use {{modulName|ucf}}\Model\{{tableName|ucf}}\Storage\{{tableName|ucf}}Storage;
+use {{modulName|ucf}}\Model\{{name|ucf}}\Storage\{{name|ucf}}Storage;
 use Zend\Hydrator\ClassMethods;
 
 
 /**
  * Class SettingsEntity
- * @package {{modulName|ucf}}\Model\{{tableName|ucf}}\Entity;
+ * @package {{modulName|ucf}}\Model\{{name|ucf}}\Entity;
  */
-class {{tableName|ucf}}Entity
+class {{name|ucf}}Entity
 {
 
 
     /**
-     * @var {{tableName|ucf}}Storage
+     * @var {{name|ucf}}Storage
      */
     private $storage;
 
     {% if fields|length > 0 %}{% for item in fields %}
-    private ${{item.fieldName|lcf}};
+    private ${{item.name|lcf}};
     {% endfor %}{% endif %}
 
     /**
-     * {{tableName|ucf}}Entity constructor.
-     * @param {{tableName|ucf}}Storage $repository
+     * {{name|ucf}}Entity constructor.
+     * @param {{name|ucf}}Storage $repository
      */
     public function __construct($repository)
     {
@@ -44,7 +44,7 @@ class {{tableName|ucf}}Entity
 
     public function reorg(){
         {% if fieldsByTypes.treePath|length > 0 %}{% for item in fieldsByTypes.treePath %}
-            $this->set{{item.fieldName|ucf}}( $this->generate{{item.fieldName|ucf}}() );
+            $this->set{{item.name|ucf}}( $this->generate{{item.name|ucf}}() );
         {% endfor %}{% endif %}
     }
 
@@ -57,7 +57,7 @@ class {{tableName|ucf}}Entity
         if ($this->label == null){
             $this->label = '';
             {% for item in fieldsByTypes.label %}
-                if (trim($this->get{{item.fieldName|ucf}}()) !=''){ $this->label .= trim($this->get{{item.fieldName|ucf}}());}
+                if (trim($this->get{{item.name|ucf}}()) !=''){ $this->label .= trim($this->get{{item.name|ucf}}());}
             {% endfor %}
         }
         return $this->label;

@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="Datenmodell für {{tableName|ucf}} im Projekt {{project.caption}}">
+    <meta name="description" content="Datenmodell für {{name|ucf}} im Projekt {{project.caption}}">
     <meta name="author" content="{{template.creator}}">
 
-    <title>Daten f&uml;r {{tableName|ucf}}</title>
+    <title>Daten für {{name|ucf}}</title>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -28,7 +28,7 @@
 <div class="container">
 
     <div class="blog-header">
-        <h1 class="blog-title">Datenmodell für {{tableName|ucf}} im Projekt {{project.caption}}</h1>
+        <h1 class="blog-title">Datenmodell für {{name|ucf}} im Projekt {{project.caption}}</h1>
         <p class="lead blog-description">{{desctiption}}</p>
     </div>
 
@@ -56,9 +56,9 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>fieldName</th>
-                        <th>fieldName Ucf</th>
-                        <th>fieldName Lcf</th>
+                        <th>name</th>
+                        <th>name Ucf</th>
+                        <th>name Lcf</th>
                         <th>fieldType</th>
                         <th>canBeNull</th>
                         <th>isIndex</th>
@@ -72,9 +72,9 @@
                         {% for item in fields %}
                             <tr>
                                 <th scope="row">{{ loop.index }}</th>
-                                <td>{{item.fieldName}}</td>
-                                <td>{{item.fieldName|ucf}}</td>
-                                <td>{{item.fieldName|lcf}}</td>
+                                <td>{{item.name}}</td>
+                                <td>{{item.name|ucf}}</td>
+                                <td>{{item.name|lcf}}</td>
                                 <td>{{item.fieldType}}</td>
                                 <td>{{item.canBeNull}}</td>
                                 <td>{{item.isIndex}}</td>
@@ -108,9 +108,9 @@
                             <tr>
                                 <th scope="row">{{ loop.index }}</th>
                                 <td>{{item.masterTable}}</td>
-                                <td>{{item.masterField.fieldName}}</td>
+                                <td>{{item.masterField.name}}</td>
                                 <td><a href="{{item.childrenTable|ucf}}.html">{{item.childrenTable}}</a></td>
-                                <td>{{item.childrenField.fieldName}}</td>
+                                <td>{{item.childrenField.name}}</td>
                                 <td>{{item.onDelete}}</td>
                                 <td>{{item.onUpdate}}</td>
                                 <td>{{item.onInsert}}</td>
@@ -141,9 +141,9 @@
                             <tr>
                                 <th scope="row">{{ loop.index }}</th>
                                 <td><a href="{{item.masterTable|ucf}}.html">{{item.masterTable}}</a></td>
-                                <td>{{item.masterField.fieldName}}</td>
+                                <td>{{item.masterField.name}}</td>
                                 <td>{{item.childrenTable}}</td>
-                                <td>{{item.childrenField.fieldName}}</td>
+                                <td>{{item.childrenField.name}}</td>
                                 <td>{{item.onDelete}}</td>
                                 <td>{{item.onUpdate}}</td>
                                 <td>{{item.onInsert}}</td>

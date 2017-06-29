@@ -19,6 +19,7 @@ class MysqlCreator extends AbstractCreator
 	private $tabelle;
 	private $projectName;
 	private $overrideIfExists = true;
+	private $possibleReference = [];
 
 	/**
 	 * @var \mysqli
@@ -37,33 +38,66 @@ class MysqlCreator extends AbstractCreator
 	}
 
 	private function getReferences(){
+		Log::writeLogLn('Refernzen von MySql');
 		$result = $this->mySql->query('SELECT CONSTRAINT_NAME, TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME, REFERENCED_TABLE_SCHEMA, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA= "'.$this->mySql->escape_string($this->datenbank).'" AND REFERENCED_TABLE_SCHEMA is not null' );
 		while ($myrow = $result->fetch_array(MYSQLI_ASSOC)){
-		  $filename = $this->generatePathToProject($this->projectName).'data/References/'.$this->cleanFileName($myrow['CONSTRAINT_NAME']).'.json';
-			if (!file_exists($filename) or $this->overrideIfExists){
-				if (!is_dir(pathinfo($filename,PATHINFO_DIRNAME))){
-					mkdir(pathinfo($filename,PATHINFO_DIRNAME),0777,true);
-				}
-
-				$datas = [
-					"masterTable"=> $myrow['REFERENCED_TABLE_NAME'],
-					"masterField"=>$myrow['REFERENCED_COLUMN_NAME'],
-					"childrenTable"=> $myrow['TABLE_NAME'],
-					"childrenField"=>$myrow['COLUMN_NAME'],
-					"onDelete"=> null,
-					"onUpdate"=> null,
-					"onInsert"=> null
-				];
-
-				file_put_contents($filename,json_encode([$datas],JSON_PRETTY_PRINT));
-			}
-
+			  $this->saveReference(
+				  $this->getReferencesFileName(
+				  	$this->cleanFileName(
+				  		$myrow['REFERENCED_TABLE_NAME'].'_'.
+				  		$myrow['REFERENCED_COLUMN_NAME'].'_'.
+				  		$myrow['TABLE_NAME'].'_'.
+				  		$myrow['COLUMN_NAME']
+					)
+				  ),
+				  [
+							"masterTable"=> $myrow['REFERENCED_TABLE_NAME'],
+							"masterField"=>$myrow['REFERENCED_COLUMN_NAME'],
+							"childrenTable"=> $myrow['TABLE_NAME'],
+							"childrenField"=>$myrow['COLUMN_NAME'],
+							"onDelete"=> null,
+							"onUpdate"=> null,
+							"onInsert"=> null
+				  ]
+			  );
 		}
 		$result->close();
+		Log::writeLogLn('');
+
+		Log::writeLogLn('Refernzen aus den Fieldnamen abgeleitet:');
+		foreach ($this->possibleReference as $possibleReference){
+			if (file_exists($this->getTableFileName($possibleReference['masterTable']))){
+				$this->saveReference(
+					$this->getReferencesFileName(
+						$this->cleanFileName(
+							$possibleReference['masterTable'].'_'.
+							$possibleReference['masterField'].'_'.
+							$possibleReference['childrenTable'].'_'.
+							$possibleReference['childrenField']
+						)
+					),
+					$possibleReference
+				);
+			}
+		}
+		Log::writeLogLn('');
+
+	}
+
+	private function saveReference($fileName,$data){
+			if (!file_exists($fileName) || $this->overrideIfExists){
+				if (!is_dir(pathinfo($fileName,PATHINFO_DIRNAME))){
+					mkdir(pathinfo($fileName,PATHINFO_DIRNAME),0777,true);
+				}
+				Log::writeLog('.');
+				file_put_contents($fileName,json_encode([$data],JSON_PRETTY_PRINT));
+			}
+
 	}
 
 
 	private function getTables(){
+		Log::writeLogLn('Lade Tabellen');
 		$tables = array();
 		$result = $this->mySql->query('SHOW TABLE STATUS FROM '.$this->mySql->escape_string($this->datenbank) );
 		while ($myrow = $result->fetch_array(MYSQLI_ASSOC)){
@@ -71,17 +105,35 @@ class MysqlCreator extends AbstractCreator
 		}
 		$result->close();
 
+		$result = $this->mySql->query('SHOW FULL TABLES IN '.$this->mySql->escape_string($this->datenbank) );
+		while ($myrow = $result->fetch_array(MYSQLI_NUM)){
+		  $tables[$myrow[0]]['type']=$myrow[1];
+		}
+		$result->close();
+
+
+		Log::writeLogLn('analysiere Tabellen:');
 		while (list($tableName,$table)=@each($tables)){
 			$tables[$tableName] = $this->convertMysqlTable($table);
-			$filename = $this->generatePathToProject($this->projectName).'data/Table/'.$this->cleanFileName($tableName).'.json';
-			if (!file_exists($filename) or $this->overrideIfExists){
+			$filename = $this->getTableFileName($tableName);
+			if (!file_exists($filename) || $this->overrideIfExists ){
 				if (!is_dir(pathinfo($filename,PATHINFO_DIRNAME))){
 					mkdir(pathinfo($filename,PATHINFO_DIRNAME),0777,true);
 				}
+				Log::writeLog('.');
 				file_put_contents($filename,json_encode($tables[$tableName],JSON_PRETTY_PRINT));
 			}
 		}
+		Log::writeLogLn('');
 
+	}
+
+	private function getTableFileName($tableName){
+		return $this->generatePathToProject($this->projectName).'data/Table/'.$this->cleanFileName(strtolower($tableName)).'.json';
+	}
+
+	private function getReferencesFileName($referencesName){
+		return $this->generatePathToProject($this->projectName).'data/References/'.strtolower($referencesName).'.json';
 	}
 
 	private function convertMysqlTable($table){
@@ -90,13 +142,22 @@ class MysqlCreator extends AbstractCreator
 			"desctiption"   	=> $table['Comment'],
 			"modul"         	=> null,
 			"isDepricated"      => false,
-			"type"         		=> "table",
+			"type"         		=> null,
 			"extraInformation"  => [
 				"hasPictureliste" => false,
 				"isDistributable" => true
 			],
 			"fields" => []
 		];
+
+		switch (strtoupper($table['type'])){
+			case 'VIEW': $return['type']='view'; break;
+			case 'BASE TABLE': $return['type']='table'; break;
+			default:
+				echo 'UNKNOWN TYP! '.$table['type'];
+				$return['type']='unknown';
+		}
+
 
 		try {
 			$help = json_decode($table['Comment'],1);
@@ -108,10 +169,31 @@ class MysqlCreator extends AbstractCreator
 
 		$result = $this->mySql->query('SHOW FULL COLUMNS FROM '.$table['Name']);
 		while ($myrow = $result->fetch_array(MYSQLI_ASSOC)){
-		  $return['fields'][] =  $this->convertMysqlFieldToField($myrow);
+			$this->possibleReferenceDetection($table['Name'],$myrow);
+			$return['fields'][] =  $this->convertMysqlFieldToField($myrow);
 		}
 		$result->close();
 		return $return;
+	}
+
+	private function possibleReferenceDetection($mysqlTableName,$mysqlField){
+		$help = explode('_',$mysqlField["Field"]);
+		if (count($help)<2){ return; }
+		end($help);
+		$key = key($help);
+		if (strtolower($help[$key]) =='id'){
+			array_pop($help);
+			$this->possibleReference[] = [
+					"masterTable"	=> implode('_',$help),
+					"masterField"	=> 'id',
+					"childrenTable"	=> $mysqlTableName,
+					"childrenField"	=> $mysqlField["Field"],
+					"onDelete"=> null,
+					"onUpdate"=> null,
+					"onInsert"=> null
+			];
+		}
+
 	}
 
 	private function convertMysqlFieldToField($mysqlField){

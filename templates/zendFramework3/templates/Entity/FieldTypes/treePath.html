@@ -1,33 +1,33 @@
 /**
-     * @param string ${{item.fieldName|lcf}}
+     * @param string ${{item.name|lcf}}
      * @return self
      */
-    public function set{{item.fieldName|ucf}}(${{item.fieldName|lcf}})
+    public function set{{item.name|ucf}}(${{item.name|lcf}})
     {
-        $this->{{item.fieldName|lcf}} = ${{item.fieldName|lcf}};
+        $this->{{item.name|lcf}} = ${{item.name|lcf}};
         return $this;
     }
 
     /**
      * @return string
      */
-    public function get{{item.fieldName|ucf}}()
+    public function get{{item.name|ucf}}()
     {
-        if ($this->{{item.fieldName|lcf}} == null){
-            $this->{{item.fieldName|lcf}} = $this->generate{{item.fieldName|ucf}}();
+        if ($this->{{item.name|lcf}} == null){
+            $this->{{item.name|lcf}} = $this->generate{{item.name|ucf}}();
         }
-        return $this->{{item.fieldName|lcf}};
+        return $this->{{item.name|lcf}};
     }
 
     /**
      * @return string
      */
-    public function generate{{item.fieldName|ucf}}()
+    public function generate{{item.name|ucf}}()
     {
         $return = '';
 
         if ($this->hasParent()){
-            $return .= $this->getParent()->get{{item.fieldName|ucf}}();
+            $return .= $this->getParent()->get{{item.name|ucf}}();
         }else{
             $return .='tree://';
         }
@@ -39,8 +39,8 @@
     /**
      * @return bool|string
      */
-    public function get{{item.fieldName|ucf}}WithoutMe(){
-        $tree = $this->get{{item.fieldName|ucf}}();
+    public function get{{item.name|ucf}}WithoutMe(){
+        $tree = $this->get{{item.name|ucf}}();
         return substr($tree,0,strrpos($tree,'/')-1);
     }
 
