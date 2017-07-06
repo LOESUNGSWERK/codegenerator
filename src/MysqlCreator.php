@@ -143,6 +143,7 @@ class MysqlCreator extends AbstractCreator
 			"modul"         	=> null,
 			"isDepricated"      => false,
 			"type"         		=> null,
+			"datenbank" 		=> $this->getDatenbank(),
 			"extraInformation"  => [
 				"hasPictureliste" => false,
 				"isDistributable" => true
