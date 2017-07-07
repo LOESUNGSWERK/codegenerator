@@ -1,5 +1,5 @@
 {
-    "tableName"         : "user_gruppen",
+    "name"         : "user_gruppen",
     "desctiption"       : "Usergruppen",
     "modulName"         : "user",
     "isDepricated"      : false,
@@ -10,8 +10,8 @@
     },
     "fields":[
       {
-          "fieldName"     : "id",
-          "fieldType"     : "integer",
+          "name"     : "id",
+          "type"     : "integer",
           "defaultValue"  : null,
           "isAutoinc"     : true,
           "isPrimaryKey"  : true,
@@ -19,8 +19,8 @@
           "canBeNull"     : false
       },
       {
-          "fieldName"         : "bez1",
-          "fieldType"         : "string",
+          "name"         : "bez1",
+          "type"         : "string",
           "defaultValue"      : null,
           "isAutoinc"         : false,
           "isPrimaryKey"      : false,

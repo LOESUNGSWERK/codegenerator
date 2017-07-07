@@ -14,24 +14,33 @@ class Dispatcher
 
 	public function run()
 	{
+	    $hadSomeThingToDo = false;
 		if ($this->getOption('generateFromDb')) {
 			$this->generateFromDb();
+			$hadSomeThingToDo = true;
 		}
 		if ($this->getOption('new')) {
 			$this->createNew();
+			$hadSomeThingToDo = true;
 		}
 		if ($this->getOption('generate')) {
 			$this->generate();
+			$hadSomeThingToDo = true;
 		}
 		if ($this->getOption('help')) {
 			$this->paintHelp();
+			$hadSomeThingToDo = true;
 		}
+
+		if (!$hadSomeThingToDo){
+		    $this->paintHelp();
+        }
 	}
 
 
 	private function generateFromDb()
 	{
-		$host = trim($this->getOption('host:'));
+	    $host = trim($this->getOption('host:'));
 		$user = trim($this->getOption('user:'));
 		$pw = trim($this->getOption('pw:'));
 		$datenbank = trim($this->getOption('datenbank:'));

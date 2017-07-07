@@ -1,5 +1,5 @@
 {
-    "tableName"         : "users",
+    "name"         : "users",
     "desctiption"       : "Userverwaltung",
     "modulName"         : "user",
     "isDepricated"      : false,
@@ -10,8 +10,8 @@
     },
     "fields":[
       {
-          "fieldName"     : "id",
-          "fieldType"     : "integer",
+          "name"     : "id",
+          "type"     : "integer",
           "defaultValue"  : null,
           "isAutoinc"     : true,
           "isPrimaryKey"  : true,
@@ -19,8 +19,8 @@
           "canBeNull"     : false
       },
       {
-          "fieldName"     : "user_gruppen_id",
-          "fieldType"     : "integer",
+          "name"     : "user_gruppen_id",
+          "type"     : "integer",
           "defaultValue"  : null,
           "isAutoinc"     : false,
           "isPrimaryKey"  : false,
@@ -28,8 +28,8 @@
           "canBeNull"     : false
       },
       {
-          "fieldName"         : "bez1",
-          "fieldType"         : "string",
+          "name"         : "bez1",
+          "type"         : "string",
           "defaultValue"      : null,
           "isAutoinc"         : false,
           "isPrimaryKey"      : false,
@@ -41,8 +41,8 @@
           }
       },
       {
-          "fieldName"         : "login",
-          "fieldType"         : "string",
+          "name"         : "login",
+          "type"         : "string",
           "defaultValue"      : null,
           "isAutoinc"         : false,
           "isPrimaryKey"      : false,
@@ -50,8 +50,8 @@
           "canBeNull"         : false
       },
       {
-          "fieldName"         : "passwort",
-          "fieldType"         : "password",
+          "name"         : "passwort",
+          "type"         : "password",
           "defaultValue"      : null,
           "isAutoinc"         : false,
           "isPrimaryKey"      : false,
@@ -59,8 +59,8 @@
           "canBeNull"         : false
       },
       {
-          "fieldName"         : "aktiv",
-          "fieldType"         : "boolean",
+          "name"         : "aktiv",
+          "type"         : "boolean",
           "defaultValue"      : 0,
           "isAutoinc"         : false,
           "isPrimaryKey"      : false,

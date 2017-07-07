@@ -1,5 +1,5 @@
 {
-    "tableName"         : "user_gruppen",
+    "name"         : "user_gruppen",
     "desctiption"       : "Usergruppen",
     "modulName"         : "user",
     "isDepricated"      : false,
@@ -11,8 +11,8 @@
     },
     "fields":[
       {
-          "fieldName"     : "id",
-          "fieldType"     : "integer",
+          "name"     : "id",
+          "type"     : "integer",
           "defaultValue"  : null,
           "isAutoinc"     : true,
           "isPrimaryKey"  : true,
@@ -20,8 +20,8 @@
           "canBeNull"     : false
       },
       {
-          "fieldName"     : "id",
-          "fieldType"     : "parent_id",
+          "name"     : "id",
+          "type"     : "parent_id",
           "defaultValue"  : null,
           "isAutoinc"     : false,
           "isPrimaryKey"  : false,
@@ -29,8 +29,8 @@
           "canBeNull"     : true
       },
       {
-          "fieldName"         : "bez1",
-          "fieldType"         : "label",
+          "name"         : "bez1",
+          "type"         : "label",
           "defaultValue"      : null,
           "isAutoinc"         : false,
           "isPrimaryKey"      : false,
@@ -42,8 +42,8 @@
           }
       },
       {
-          "fieldName"         : "tree",
-          "fieldType"         : "treePath",
+          "name"         : "tree",
+          "type"         : "treePath",
           "defaultValue"      : 0,
           "isAutoinc"         : false,
           "isPrimaryKey"      : false,

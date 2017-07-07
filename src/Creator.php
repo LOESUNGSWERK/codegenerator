@@ -78,7 +78,7 @@ class Creator extends AbstractCreator
 			while (list($key,$val)=@each($fields)){
 				$tableField = array_merge($defaults['field'],$val);
 				$table['fields'][$tableField['name']] = $tableField;
-				$table['fieldsByTypes'][$tableField['fieldType']][$tableField['name']] = $tableField;
+				$table['fieldsByTypes'][$tableField['type']][$tableField['name']] = $tableField;
 				if($val['isPrimaryKey']){ 	$table['primaryFields'][$tableField['name']] = $tableField; }
 				if($val['isIndex']){ 		$table['indexFields'][$tableField['name']] = $tableField; }
 			}
