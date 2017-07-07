@@ -34,6 +34,8 @@ class TaskControler
 			$templateVars['project']=$this->projectData['project'];
 			$templateVars['templates']=$this->projectData['templates'];
 			$templateVars['module']=$this->projectData['module'];
+			$templateVars['today']=date('d.m.Y');
+			$templateVars['now']=date('d.m.Y H:i:s');
 
 			$destination = $this->getDesinationFile($templateVars);
             Log::writeLog(pathinfo($destination,PATHINFO_FILENAME).'[');
@@ -94,20 +96,27 @@ class TaskControler
         }else{
             $template = $this->task['updateTemplateFile'];
         }
-
-        $code = $this->getTemplater()->render($template, $templateVars);
+        $code = $this->getTemplater([pathinfo($template,PATHINFO_DIRNAME)])->render($template, $templateVars);
         file_put_contents($destination, $code);
         Log::writeLog('u');
     }
 
 	/**
-	 * @return \Twig_Environment
+	 * @param string[] $additionalTemplatePath
+     * @return \Twig_Environment
 	 */
-	private function getTemplater(){
-		$loader = new \Twig_Loader_Filesystem(array(
-			$this->templateRoot.'templates/',
-			$this->getProjectRoot().'data/temp/'
-		));
+	private function getTemplater($additionalTemplatePath=[]){
+		$templatePath = [];
+        foreach ($additionalTemplatePath as $tplPath){
+            $helpPath = $this->templateRoot.'templates/'.$tplPath;
+            if (is_dir($helpPath)){
+                $templatePath[] = $helpPath;
+            }
+        }
+        $templatePath[] = $this->templateRoot.'templates/';
+        $templatePath[] = $this->getProjectRoot().'data/temp/';
+
+		$loader = new \Twig_Loader_Filesystem($templatePath);
 		$twig = new \Twig_Environment($loader, array(
 			'cache' => $this->getCacheDir(),
 			'debug' => true

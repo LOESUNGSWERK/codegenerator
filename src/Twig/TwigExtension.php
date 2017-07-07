@@ -15,12 +15,23 @@ class TwigExtension extends \Twig_Extension
 	public function getFilters()
     {
         return array(
+            new \Twig_SimpleFilter('uc', array($this, 'ucFilter')),
+            new \Twig_SimpleFilter('lc', array($this, 'lcFilter')),
             new \Twig_SimpleFilter('ucf', array($this, 'ucfFilter')),
             new \Twig_SimpleFilter('lcf', array($this, 'lcfFilter')),
+            new \Twig_SimpleFilter('cc', array($this, 'cammelCaseStr')),
             new \Twig_SimpleFilter('cctu', array($this, 'cctuFilter')),
             new \Twig_SimpleFilter('cctm', array($this, 'cctmFilter')),
             new \Twig_SimpleFilter('printr', array($this, 'printRFilter'), array( 'needs_context'=>true )),
         );
+    }
+
+    public function lcFilter($context){
+	    return strtolower($context);
+    }
+
+    public function ucFilter($context){
+	    return strtoupper($context);
     }
 
     public function printRFilter($context){
