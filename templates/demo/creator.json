@@ -25,6 +25,20 @@
       "aktiv": true
     },
     {
+      "caption": "json Datei",
+      "insertTemplateFile": "json/json.twig",
+      "destinationFile": "model.json",
+      "onUpdate": "REPLACE",
+      "replaceTasks": [
+        {
+          "detect" : "json/001_deteckt.twig",
+          "replaceAfter" : "json/001_replaceAfter.twig",
+          "templateFile" : "json/001_template.twig"
+        }
+      ],
+      "aktiv": true
+    },
+    {
       "caption": "Datemmodel",
       "insertTemplateFile": "dm.twig",
       "destinationFile": "{{name|ucf}}.html",
