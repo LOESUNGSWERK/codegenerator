@@ -61,7 +61,7 @@ class TaskControler
                 if (!is_dir($dir)) {
                     mkdir($dir, 0777, true);
                 }
-                $code = $this->getTemplater()->render($this->task['insertTemplateFile'], $templateVars);
+                $code = $this->getTemplater([pathinfo($this->task['insertTemplateFile'], PATHINFO_DIRNAME)])->render($this->task['insertTemplateFile'], $templateVars);
                 file_put_contents($destination, $code);
                 Log::writeLog('i');
                 if (strtoupper($this->task['onUpdate']) == 'REPLACE') {

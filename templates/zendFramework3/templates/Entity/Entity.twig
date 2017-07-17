@@ -67,11 +67,11 @@ class {{name|ucf}}Entity
 
     {% if fields|length > 0 %}{% for item in fields %}
         {% if item.type == "treePath" %}
-            {% include 'Entity/FieldTypes/treePath.twig' %}
+            {% include 'FieldTypes/treePath.twig' %}
         {% elseif item.type == "boolean" %}
-            {% include 'Entity/FieldTypes/boolean.twig' %}
+            {% include 'FieldTypes/boolean.twig' %}
         {% else %}
-            {% include 'Entity/FieldTypes/default.twig' %}
+            {% include 'FieldTypes/default.twig' %}
         {% endif %}
     {% endfor %}{% endif %}
 
