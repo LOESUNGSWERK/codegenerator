@@ -9,8 +9,15 @@
 namespace RkuCreator;
 
 
+use Symfony\Component\Console\Style\SymfonyStyle;
+
 abstract class AbstractCreator
 {
+
+	/**
+	 * @var SymfonyStyle
+	 */
+	protected $commandIo;
 
 	const PATH_TO_PROJECTS = __DIR__.'/../projects/';
 	const PATH_TO_DEFAUTLS = __DIR__.'/../data/defaultData/';
@@ -46,6 +53,26 @@ abstract class AbstractCreator
         $string = str_replace ("--", "-", $string);
         preg_replace ("/[^0-9^a-z^A-Z^-^_^.]/", "", $string);
         return $string;
+	}
+
+	/**
+	 * @return SymfonyStyle
+	 */
+	public function getCommandIo()
+	{
+		return $this->commandIo;
+	}
+
+	/**
+	 * @param SymfonyStyle $commandIo
+	 *
+	 * @return QuellcodeCreator
+	 */
+	public function setCommandIo($commandIo)
+	{
+		$this->commandIo = $commandIo;
+
+		return $this;
 	}
 
 }

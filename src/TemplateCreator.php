@@ -18,10 +18,10 @@ class TemplateCreator extends AbstractCreator
 	public function create(){
 		$newDir = self::PATH_TO_TEMPLATES.$this->templateName.'/';
 		if(!is_dir($newDir)){
-			Log::writeLog('Erzeuge das Template "'.$this->templateName.'" ');
+			$this->commandIo->write('Erzeuge das Template "'.$this->templateName.'" ');
 			$this->fillPathWithDummyData($newDir);
 		}else{
-			Log::writeLogLn('Das Template "'.$this->templateName.'" gibt es schon...');
+			$this->commandIo->writeln('Das Template "'.$this->templateName.'" gibt es schon...');
 		}
 	}
 

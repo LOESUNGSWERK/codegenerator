@@ -1,2 +1,2 @@
 #!/usr/bin/php
-php ../create.php
+php ../generate.php
