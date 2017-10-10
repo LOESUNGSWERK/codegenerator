@@ -1,0 +1,14 @@
+{
+  "caption": "json Datei",
+  "insertTemplate": "json/json.twig",
+  "destinationFile": "model.json",
+  "onUpdate": "REPLACE",
+  "replaceTasks": [
+    {
+      "detect": "json/001_deteckt.twig",
+      "replaceAfter": "json/001_replaceAfter.twig",
+      "template": "json/001_template.twig"
+    }
+  ],
+  "aktiv": true
+}

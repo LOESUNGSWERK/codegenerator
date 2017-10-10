@@ -2,7 +2,8 @@
     "require": {
         "twig/twig": "^1.33",
         "symfony/console": "^3.3",
-        "symfony/filesystem": "^3.3"
+        "symfony/filesystem": "^3.3",
+        "symfony/finder": "^3.3"
     },
     "autoload": {
         "psr-4": {

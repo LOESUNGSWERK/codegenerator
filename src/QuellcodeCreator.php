@@ -10,6 +10,7 @@
 
 
 	use Symfony\Component\Filesystem\Filesystem;
+	use Symfony\Component\Finder\Finder;
 
 	class QuellcodeCreator extends AbstractCreator
 	{
@@ -62,15 +63,31 @@
 
 		protected function loadTempateDaten($template)
 		{
+
+			$templatePath = $this->generatePathToTemplate($template);
+
+			$tastks = [];
+			$finder = new Finder();
+			$finder->files()->name('*.json');
+			foreach ($finder->in($templatePath . 'templates') as $file) {
+				$tastks[] = json_decode(
+					file_get_contents($file->getRealPath()),
+					true
+				);
+			}
+
 			return array_merge_recursive(
 				[
 					'target'   => './',
 					'defaults' => [],
 				],
 				json_decode(
-					file_get_contents($this->generatePathToTemplate($template) . 'creator.json'),
+					file_get_contents($templatePath . 'creator.json'),
 					true
-				)
+				),
+				[
+					'tasks' => $tastks,
+				]
 			);
 		}
 

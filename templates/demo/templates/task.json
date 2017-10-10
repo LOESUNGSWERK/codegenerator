@@ -1,0 +1,7 @@
+{
+  "caption": "Datemmodel",
+  "insertTemplate": "dm.twig",
+  "destinationFile": "{{name|ucf}}.html",
+  "onUpdate": "OVERWRIDE",
+  "aktiv": true
+}
