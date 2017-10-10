@@ -74,6 +74,7 @@
 					}
 				}
 			}
+			$bar1->setMessage('');
 			$bar1->finish();
 		}
 

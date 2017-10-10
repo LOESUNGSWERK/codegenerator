@@ -34,7 +34,11 @@
 
 			file_put_contents($this->generatePathToProject($project) . '/data/tableData.json', json_encode($projectDaten, JSON_PRETTY_PRINT));
 
-			$this->commandIo->section('render project ' . $project . ' with template ' . $template);
+
+			$this->commandIo->section('Starte Rendervorgang');
+			$this->commandIo->block(
+				'Es werden im Projekt >>' . $project . '<< '.count($taskListe).' Templates mit '.count($projectDaten['tables']).' tabellen gerendert'
+			);
 
 			$bar1 = new ProgressBar($this->commandIo->getOutput(), count($taskListe));
 			$bar1->start(count($taskListe));
@@ -57,6 +61,9 @@
 				$this->commandIo->write("\033[1A");
 
 			}
+
+			$bar1->setMessage('');
+			$bar1->finish();
 
 			$this->commandIo->block(
 				'fertig nach ' .
