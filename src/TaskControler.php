@@ -9,6 +9,7 @@
 	namespace RkuCreator;
 
 	use RkuCreator\Twig\TwigExtension;
+	use Symfony\Component\Console\Helper\ProgressBar;
 
 	class TaskControler extends AbstractCreator
 	{
@@ -26,8 +27,16 @@
 		public function run()
 		{
 			reset($this->projectData['tables']);
+			$totalSteps = count($this->projectData['tables']);
+			$bar1 = new ProgressBar($this->commandIo->getOutput(), 1024);
+			$bar1->start($totalSteps);
+			$bar1->advance();
+			$bar1->setFormat('%current:3s%/%max:3s% [%bar%] %percent:3s%% %message%');
+
 			foreach ($this->projectData['tables'] as $table) {
 				$templateVars = $table;
+				$bar1->setMessage($table['name']);
+				$bar1->advance();
 
 				$templateVars['project']   = $this->projectData['project'];
 				$templateVars['tables']    = $this->projectData['tables'];
@@ -64,8 +73,8 @@
 						$this->replaceQuellcode($destination, $templateVars);
 					}
 				}
-				$this->commandIo->progressAdvance();
 			}
+			$bar1->finish();
 		}
 
 		private function renderMe($string, $templateVars)

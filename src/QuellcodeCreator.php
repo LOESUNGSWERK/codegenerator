@@ -9,6 +9,7 @@
 	namespace RkuCreator;
 
 
+	use Symfony\Component\Console\Helper\ProgressBar;
 	use Symfony\Component\Filesystem\Filesystem;
 	use Symfony\Component\Finder\Finder;
 
@@ -34,10 +35,17 @@
 			file_put_contents($this->generatePathToProject($project) . '/data/tableData.json', json_encode($projectDaten, JSON_PRETTY_PRINT));
 
 			$this->commandIo->section('render project ' . $project . ' with template ' . $template);
-			$totalSteps = (count($taskListe) * count($projectDaten['tables']));
-			$this->commandIo->createProgressBar($totalSteps);
-			$this->commandIo->progressStart($totalSteps);
+
+			$bar1 = new ProgressBar($this->commandIo->getOutput(), count($taskListe));
+			$bar1->start(count($taskListe));
+			$bar1->setFormat('%current:3s%/%max:3s% [%bar%] %percent:3s%% %message%');
+
+
 			foreach ($taskListe as $taskData) {
+				$bar1->setMessage($taskData['caption']);
+				$bar1->advance();
+
+				$this->commandIo->newLine();
 				$task = new TaskControler();
 				$task->setTemplateRoot($this->generatePathToTemplate($template));
 				$task->setProjectRoot($this->generatePathToProject($project));
@@ -46,9 +54,9 @@
 				$task->setTemplateData($templateDaten);
 				$task->setCommandIo($this->commandIo);
 				$task->run();
-			}
+				$this->commandIo->write("\033[1A");
 
-			$this->commandIo->progressFinish();
+			}
 
 			$this->commandIo->block(
 				'fertig nach ' .

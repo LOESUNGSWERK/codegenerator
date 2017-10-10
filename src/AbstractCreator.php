@@ -9,8 +9,6 @@
 namespace RkuCreator;
 
 
-use Symfony\Component\Console\Style\SymfonyStyle;
-
 abstract class AbstractCreator
 {
 
