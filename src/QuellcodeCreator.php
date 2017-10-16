@@ -81,29 +81,30 @@
 
 			$templatePath = $this->generatePathToTemplate($template);
 
-			$tastks = [];
+			$return = json_decode(
+					file_get_contents($templatePath . 'creator.json'),
+					true
+			);
+
 			$finder = new Finder();
 			$finder->files()->name('*.json');
 			foreach ($finder->in($templatePath . 'templates') as $file) {
-				$tastks[] = json_decode(
+				$help = json_decode(
 					file_get_contents($file->getRealPath()),
 					true
 				);
+
+				if (empty($help['caption'])){
+					foreach ($help as $task){
+						$return['tasks'][] = $task;
+					}
+				}else{
+					$return['tasks'][] =$help;
+				}
+
 			}
 
-			return array_merge_recursive(
-				[
-					'target'   => './',
-					'defaults' => [],
-				],
-				json_decode(
-					file_get_contents($templatePath . 'creator.json'),
-					true
-				),
-				[
-					'tasks' => $tastks,
-				]
-			);
+			return $return;
 		}
 
 		private function loadProjectData($projetName)

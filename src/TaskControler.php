@@ -45,8 +45,10 @@
 				$templateVars['today']     = date('d.m.Y');
 				$templateVars['now']       = date('d.m.Y H:i:s');
 				$templateVars['debug']     = print_r($templateVars,true);
+				$templateVars['EOL']       = PHP_EOL;
 
 				$destination = $this->getDesinationFile($templateVars);
+
 				if (file_exists($destination)) {
 
 					switch (strtoupper($this->task['onUpdate'])) {
