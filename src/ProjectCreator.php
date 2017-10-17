@@ -18,33 +18,33 @@ class ProjectCreator extends AbstractCreator
 	public function create(){
 		$newDir = self::PATH_TO_PROJECTS.$this->projectName.'/';
 		if(!is_dir($newDir)){
-			Log::writeLog('Erzeuge das Projekt "'.$this->projectName.'" ');
+			$this->commandIo->write('Erzeuge das Projekt "'.$this->projectName.'" ');
 			$this->fillPathWithDummyData($newDir);
 		}else{
-			Log::writeLogLn('Das Projekt "'.$this->projectName.'" gibt es schon...');
+			$this->commandIo->writeln('Das Projekt "'.$this->projectName.'" gibt es schon...');
 		}
 	}
 
 	private function fillPathWithDummyData($path){
-		Log::writeLog('.');
+		$this->commandIo->write('.');
 		mkdir($path.'data/Table',0777,true);
-		Log::writeLog('.');
+		$this->commandIo->write('.');
 		mkdir($path.'data/References',0777,true);
-		Log::writeLog('.');
+		$this->commandIo->write('.');
 		mkdir($path.'data/temp',0777,true);
-		Log::writeLog('.');
+		$this->commandIo->write('.');
 		mkdir($path.'dist',0777,true);
-		Log::writeLog('.');
+		$this->commandIo->write('.');
 		copy(self::PATH_TO_DEFAUTLS.'project/data/Table/content.json',$path.'data/Table/content.json');
-		Log::writeLog('.');
+		$this->commandIo->write('.');
 		copy(self::PATH_TO_DEFAUTLS.'project/data/Table/user.json',$path.'data/Table/user.json');
-		Log::writeLog('.');
+		$this->commandIo->write('.');
 		copy(self::PATH_TO_DEFAUTLS.'project/data/Table/userGruppen.json',$path.'data/Table/userGruppen.json');
-		Log::writeLog('.');
+		$this->commandIo->write('.');
 		copy(self::PATH_TO_DEFAUTLS.'project/data/References/user_user_gruppen.json',$path.'data/References/user_user_gruppen.json');
-		Log::writeLog('.');
+		$this->commandIo->write('.');
 		copy(self::PATH_TO_DEFAUTLS.'project/data/References/content_user.json',$path.'data/References/content_user.json');
-		Log::writeLogLn(' fertig ');
+		$this->commandIo->writeln(' fertig ');
 	}
 
 	/**

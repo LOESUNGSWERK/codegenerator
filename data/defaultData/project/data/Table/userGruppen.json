@@ -1,7 +1,7 @@
 {
     "name"         : "user_gruppen",
     "desctiption"       : "Usergruppen",
-    "modulName"         : "user",
+    "modul"         : "user",
     "isDepricated"      : false,
     "tableType"         : "table",
     "extraInformation"  : {

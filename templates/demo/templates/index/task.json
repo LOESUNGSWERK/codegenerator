@@ -1,0 +1,20 @@
+{
+  "caption": "Index Seite",
+  "insertTemplate": "index/index.twig",
+  "destinationFile": "index.html",
+  "onUpdate": "REPLACE",
+  "replaceTasks": [
+    {
+      "detect": "<!-- detect {{name|ucf}} li -->",
+      "replaceAfter": "<!-- myDatenmodelleLi -->",
+      "template": "index/datenmodelleLi.twig"
+    },
+    {
+      "type": "table",
+      "detect": "<!-- detect {{name|ucf}} Div -->",
+      "replaceAfter": "<!-- myDatenmodelleDiv -->",
+      "template": "index/datenmodellDiv.twig"
+    }
+  ],
+  "aktiv": true
+}

@@ -1,7 +1,7 @@
 {
     "name"         : "content",
     "desctiption"       : "Website",
-    "modulName"         : "web",
+    "modul"         : "web",
     "isDepricated"      : false,
     "tableType"         : "table",
     "extraInformation"  : {

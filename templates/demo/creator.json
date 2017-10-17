@@ -4,46 +4,9 @@
   "caption": "Demo Applikation",
   "description": "zeigt die einfache Funktion des ganzen",
   "target": "./simpleDemo/",
-  "tasks": [
-     {
-      "caption": "Index Seite",
-      "insertTemplateFile": "index/index.twig",
-      "destinationFile": "index.html",
-      "onUpdate": "REPLACE",
-      "replaceTasks": [
-        {
-          "detect" : "<!-- detect {{name|ucf}} li -->",
-          "replaceAfter" : "<!-- myDatenmodelleLi -->",
-          "templateFile" : "index/datenmodelleLi.twig"
-        },
-        {
-          "detect" : "<!-- detect {{name|ucf}} Div -->",
-          "replaceAfter" : "<!-- myDatenmodelleDiv -->",
-          "templateFile" : "index/datenmodellDiv.twig"
-        }
-      ],
-      "aktiv": true
-    },
-    {
-      "caption": "json Datei",
-      "insertTemplateFile": "json/json.twig",
-      "destinationFile": "model.json",
-      "onUpdate": "REPLACE",
-      "replaceTasks": [
-        {
-          "detect" : "json/001_deteckt.twig",
-          "replaceAfter" : "json/001_replaceAfter.twig",
-          "templateFile" : "json/001_template.twig"
-        }
-      ],
-      "aktiv": true
-    },
-    {
-      "caption": "Datemmodel",
-      "insertTemplateFile": "dm.twig",
-      "destinationFile": "{{name|ucf}}.html",
-      "onUpdate": "OVERWRIDE",
-      "aktiv": true
+  "defaults": {
+    "table": {
+      "TemplateZusatzVars": "zusatz"
     }
-  ]
+  }
 }

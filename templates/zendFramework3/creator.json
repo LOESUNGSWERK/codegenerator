@@ -31,105 +31,105 @@
   "tasks": [
     {
       "caption": "Entity",
-      "insertTemplateFile": "Entity/Entity.twig",
+      "insertTemplate": "Entity/Entity.twig",
       "destinationFile": "module/{{modulName|ucf}}/src/Model/{{name|ucf}}/Entity/{{name|ucf}}Entity.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "StorageFactory",
-      "insertTemplateFile": "Storage/StorageFactory.twig",
+      "insertTemplate": "Storage/StorageFactory.twig",
       "destinationFile": "module/{{modulName|ucf}}/src/Model/{{name|ucf}}/Storage/{{name|ucf}}StorageFactory.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "Storage",
-      "insertTemplateFile": "Storage/Storage.twig",
+      "insertTemplate": "Storage/Storage.twig",
       "destinationFile": "module/{{modulName|ucf}}/src/Model/{{name|ucf}}/Storage/{{name|ucf}}Storage.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "Repository",
-      "insertTemplateFile": "Repository/Repository.twig",
+      "insertTemplate": "Repository/Repository.twig",
       "destinationFile": "module/{{modulName|ucf}}/src/Model/{{name|ucf}}/Repository/{{name|ucf}}Repository.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "RepositoryFactory",
-      "insertTemplateFile": "Repository/RepositoryFactory.twig",
+      "insertTemplate": "Repository/RepositoryFactory.twig",
       "destinationFile": "module/{{modulName|ucf}}/src/Model/{{name|ucf}}/Repository/{{name|ucf}}RepositoryFactory.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "DbHydrator",
-      "insertTemplateFile": "Hydrator/DbHydrator.twig",
+      "insertTemplate": "Hydrator/DbHydrator.twig",
       "destinationFile": "module/{{modulName|ucf}}/src/Model/{{name|ucf}}/Hydrator/{{name|ucf}}DbHydrator.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "PostHydrator",
-      "insertTemplateFile": "Hydrator/PostHydrator.twig",
+      "insertTemplate": "Hydrator/PostHydrator.twig",
       "destinationFile": "module/{{modulName|ucf}}/src/Model/{{name|ucf}}/Hydrator/{{name|ucf}}PostHydrator.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "Form",
-      "insertTemplateFile": "Form/Form.twig",
+      "insertTemplate": "Form/Form.twig",
       "destinationFile": "module/{{modulName|ucf}}/src/Form/{{name|ucf}}/{{name|ucf}}Form.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "FormFactory",
-      "insertTemplateFile": "Form/FormFactory.twig",
+      "insertTemplate": "Form/FormFactory.twig",
       "destinationFile": "module/{{modulName|ucf}}/src/Form/{{name|ucf}}/{{name|ucf}}FormFactory.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "ACL-Rescources",
-      "insertTemplateFile": "Permissions/Resource.twig",
+      "insertTemplate": "Permissions/Resource.twig",
       "destinationFile": "module/{{modulName|ucf}}/src/Permissions/Resource/{{name|ucf}}Resource.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "Controller",
-      "insertTemplateFile": "Controller/Controller.twig",
+      "insertTemplate": "Controller/Controller.twig",
       "destinationFile": "module/{{modulName|ucf}}/src/Controller/{{name|ucf}}Controller.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "Module.php",
-      "insertTemplateFile": "Module.twig",
+      "insertTemplate": "Module.twig",
       "destinationFile": "module/{{modulName|ucf}}/src/Module.php",
       "onUpdate": "IGNORE",
       "aktiv": true
     },
     {
       "caption": "ControllerFactory",
-      "insertTemplateFile": "Controller/ControllerFactory.twig",
+      "insertTemplate": "Controller/ControllerFactory.twig",
       "destinationFile": "module/{{modulName|ucf}}/src/Controller/{{name|ucf}}ControllerFactory.php",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "View-Index",
-      "insertTemplateFile": "view/index.twig",
+      "insertTemplate": "view/index.twig",
       "destinationFile": "module/{{modulName|ucf}}/view/{{modulName}}/{{name|lcf}}/index.phtml",
       "onUpdate": "OVERWRIDE",
       "aktiv": true
     },
     {
       "caption": "config",
-      "insertTemplateFile": "config/config.twig",
+      "insertTemplate": "config/config.twig",
       "destinationFile": "module/{{modulName|ucf}}/config/module.config.php",
       "onUpdate": "REPLACE",
       "replaceTasks": [

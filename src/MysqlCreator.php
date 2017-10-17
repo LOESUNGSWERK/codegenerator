@@ -8,7 +8,6 @@
 
 namespace RkuCreator;
 
-
 class MysqlCreator extends AbstractCreator
 {
 
@@ -28,17 +27,17 @@ class MysqlCreator extends AbstractCreator
 
 
 	public function createDatenmodelle(){
-		Log::writeLogLn('Connect Datenbank');
+		$this->commandIo->writeln('Connect Datenbank');
 		$this->mySql = new \mysqli($this->localhost, $this->user, $this->pw, $this->datenbank);
 		if ($this->mySql->connect_error) { die('Connect Error (' . $this->mySql->connect_errno . ') '. $this->mySql->connect_error); }
-		Log::writeLogLn('...verbunden');
+		$this->commandIo->writeln('...verbunden');
 		$this->getTables();
 		$this->getReferences();
 		$this->mySql->close();
 	}
 
 	private function getReferences(){
-		Log::writeLogLn('Refernzen von MySql');
+		$this->commandIo->writeln('Refernzen von MySql');
 		$result = $this->mySql->query('SELECT CONSTRAINT_NAME, TABLE_SCHEMA, TABLE_NAME, COLUMN_NAME, REFERENCED_TABLE_SCHEMA, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_SCHEMA= "'.$this->mySql->escape_string($this->datenbank).'" AND REFERENCED_TABLE_SCHEMA is not null' );
 		while ($myrow = $result->fetch_array(MYSQLI_ASSOC)){
 			  $this->saveReference(
@@ -62,9 +61,11 @@ class MysqlCreator extends AbstractCreator
 			  );
 		}
 		$result->close();
-		Log::writeLogLn('');
+		$this->commandIo->writeln('');
 
-		Log::writeLogLn('Refernzen aus den Fieldnamen abgeleitet:');
+		$this->commandIo->writeln('Refernzen aus den Fieldnamen abgeleitet:');
+		$this->commandIo->createProgressBar(count($this->possibleReference));
+		$this->commandIo->progressStart(count($this->possibleReference));
 		foreach ($this->possibleReference as $possibleReference){
 			if (file_exists($this->getTableFileName($possibleReference['masterTable']))){
 				$this->saveReference(
@@ -80,8 +81,7 @@ class MysqlCreator extends AbstractCreator
 				);
 			}
 		}
-		Log::writeLogLn('');
-
+		$this->commandIo->progressFinish();
 	}
 
 	private function saveReference($fileName,$data){
@@ -89,7 +89,7 @@ class MysqlCreator extends AbstractCreator
 				if (!is_dir(pathinfo($fileName,PATHINFO_DIRNAME))){
 					mkdir(pathinfo($fileName,PATHINFO_DIRNAME),0777,true);
 				}
-				Log::writeLog('.');
+				$this->commandIo->progressAdvance();
 				file_put_contents($fileName,json_encode([$data],JSON_PRETTY_PRINT));
 			}
 
@@ -97,7 +97,7 @@ class MysqlCreator extends AbstractCreator
 
 
 	private function getTables(){
-		Log::writeLogLn('Lade Tabellen');
+		$this->commandIo->writeln('Lade Tabellen');
 		$tables = array();
 		$result = $this->mySql->query('SHOW TABLE STATUS FROM '.$this->mySql->escape_string($this->datenbank) );
 		while ($myrow = $result->fetch_array(MYSQLI_ASSOC)){
@@ -112,7 +112,10 @@ class MysqlCreator extends AbstractCreator
 		$result->close();
 
 
-		Log::writeLogLn('analysiere Tabellen:');
+		$this->commandIo->writeln('analysiere Tabellen:');
+		$this->commandIo->createProgressBar(count($tables));
+		$this->commandIo->progressStart(count($tables));
+
 		while (list($tableName,$table)=@each($tables)){
 			$tables[$tableName] = $this->convertMysqlTable($table);
 			$filename = $this->getTableFileName($tableName);
@@ -120,12 +123,11 @@ class MysqlCreator extends AbstractCreator
 				if (!is_dir(pathinfo($filename,PATHINFO_DIRNAME))){
 					mkdir(pathinfo($filename,PATHINFO_DIRNAME),0777,true);
 				}
-				Log::writeLog('.');
+				$this->commandIo->progressAdvance();
 				file_put_contents($filename,json_encode($tables[$tableName],JSON_PRETTY_PRINT));
 			}
 		}
-		Log::writeLogLn('');
-
+		$this->commandIo->progressFinish();
 	}
 
 	private function getTableFileName($tableName){
@@ -140,7 +142,7 @@ class MysqlCreator extends AbstractCreator
 		$return = [
 			"name"         		=> $table['Name'],
 			"desctiption"   	=> $table['Comment'],
-			"modul"         	=> null,
+			"modul"         	=> 'settings',
 			"isDepricated"      => false,
 			"type"         		=> null,
 			"datenbank" 		=> $this->getDatenbank(),
@@ -159,14 +161,12 @@ class MysqlCreator extends AbstractCreator
 				$return['type']='unknown';
 		}
 
-
 		try {
 			$help = json_decode($table['Comment'],1);
 			$return['desctiption'] 	= $help['description'];
 			$return['modul'] 		= $help['modul'];
 		}
 		catch(Exception $e) { }
-
 
 		$result = $this->mySql->query('SHOW FULL COLUMNS FROM '.$table['Name']);
 		while ($myrow = $result->fetch_array(MYSQLI_ASSOC)){
@@ -214,7 +214,9 @@ class MysqlCreator extends AbstractCreator
 	private function getType($mysqlField){
 		$return = '';
 		$help = explode('(',$mysqlField["Type"]);
-		$lenght = substr($help[1],0,-1);
+		if (!empty($help[1])){
+			$lenght = substr($help[1],0,-1);
+		}
 
 		switch (strtoupper($help[0])){
 			case 'TINYINT': 	case 'SMALLINT':
@@ -365,8 +367,6 @@ class MysqlCreator extends AbstractCreator
 	{
 		$this->overrideIfExists = $overrideIfExists;
 	}
-
-
 
 
 }
