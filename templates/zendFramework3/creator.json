@@ -136,52 +136,52 @@
         {
           "detect" : "/* use for {{name|ucf}} */",
           "replaceAfter" : "/* use includes */",
-          "templateFile" : "config/useIncludes.twig"
+          "template" : "config/useIncludes.twig"
         },
         {
           "detect" : "/* route for {{name|lcf}} */",
           "replaceAfter" : "/* router routes */",
-          "templateFile" : "config/routerRoutes.twig"
+          "template" : "config/routerRoutes.twig"
         },
         {
           "detect" : "Controller\\{{name|ucf}}Controller::class => {{name|ucf}}ControllerFactory::class,",
           "replaceAfter" : "/* controllers factories */",
-          "templateFile" : "config/controllersFactories.twig"
+          "template" : "config/controllersFactories.twig"
         },
         {
           "detect" : "/** Hydrators for {{name|ucf}} */",
           "replaceAfter" : "/* hydrators factories */",
-          "templateFile" : "config/hydratorsFactories.twig"
+          "template" : "config/hydratorsFactories.twig"
         },
         {
           "detect" : "{{name|ucf}}InputFilter::class",
           "replaceAfter" : "/* input_filters factories */",
-          "templateFile" : "config/inputFiltersFactories.twig"
+          "template" : "config/inputFiltersFactories.twig"
         },
         {
           "detect" : "{{name|ucf}}Form::class",
           "replaceAfter" : "/* form_elements factories */",
-          "templateFile" : "config/formElementsFactories.twig"
+          "template" : "config/formElementsFactories.twig"
         },
         {
           "detect" : "/** Service Manager for {{name|ucf}} */",
           "replaceAfter" : "/*  service_manager factories */",
-          "templateFile" : "config/serviceManagerFactories.twig"
+          "template" : "config/serviceManagerFactories.twig"
         },
         {
           "detect" : "/* Guest - {{name|ucf}}Resource */",
           "replaceAfter" : "/* acl GuestRole */",
-          "templateFile" : "config/aclGuestRole.twig"
+          "template" : "config/aclGuestRole.twig"
         },
         {
           "detect" : "/* Admin - {{name|ucf}}Resource */",
           "replaceAfter" : "/* acl AdminRole */",
-          "templateFile" : "config/aclAdminRole.twig"
+          "template" : "config/aclAdminRole.twig"
         },
         {
           "detect" : "'/../view/{{modulName}}/{{name|ucf}}/index.phtml'",
           "replaceAfter" : "/* template_map */",
-          "templateFile" : "config/templateMap.twig"
+          "template" : "config/templateMap.twig"
         }
       ],
       "aktiv": true
